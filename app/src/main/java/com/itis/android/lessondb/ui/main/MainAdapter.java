@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
+import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,18 +20,19 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
-    private List<String> items = new ArrayList<>();
+    // need change RoomBook to RealmBook for work with Realm on this class
+    private List<RoomBook> items = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     private final View.OnClickListener internalListener = (view) -> {
         if (onItemClickListener != null) {
             int position = (int) view.getTag();
-            String item = getItem(position);
+            Book item = getItem(position);
             onItemClickListener.onItemClick(item);
         }
     };
 
-    public MainAdapter(List<String> items) {
+    MainAdapter(List<RoomBook> items) {
         this.items.addAll(items);
     }
 
@@ -41,8 +44,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public void onBindViewHolder(MainItemHolder holder, int position) {
-        String name = getItem(position);
-        holder.bind(name);
+        RoomBook book = getItem(position);
+        holder.bind(book);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(internalListener);
     }
@@ -52,21 +55,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         return items.size();
     }
 
-    public final void changeDataSet(@NonNull List<String> values) {
+    final void changeDataSet(@NonNull List<RoomBook> values) {
         items.clear();
         items.addAll(values);
         notifyDataSetChanged();
     }
 
-    private String getItem(int pos) {
+    private RoomBook getItem(int pos) {
         return items.get(pos);
     }
 
-    public void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
+    void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(@NonNull String item);
+        void onItemClick(@NonNull Book item);
     }
 }

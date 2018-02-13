@@ -16,6 +16,18 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_main" />
 
+    <ProgressBar
+        android:id="@+id/pg_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"
+        />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_main"
         android:layout_width="56dp"
@@ -25,7 +37,6 @@
         android:elevation="6dp"
         android:src="@drawable/ic_add_white_24dp"
         android:tag="bg_tint_accent_color"
-        android:visibility="gone"
         android:onClick="onFabClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1"

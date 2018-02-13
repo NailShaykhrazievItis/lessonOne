@@ -3,24 +3,38 @@ package com.itis.android.lessondb.room;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.content.Context;
+import android.arch.persistence.room.TypeConverters;
+
+import com.itis.android.lessondb.App;
+import com.itis.android.lessondb.room.converters.DateConverter;
+import com.itis.android.lessondb.room.converters.GenreConverter;
+import com.itis.android.lessondb.room.dao.AuthorDao;
+import com.itis.android.lessondb.room.dao.BookDao;
+import com.itis.android.lessondb.room.entity.RoomAuthor;
+import com.itis.android.lessondb.room.entity.RoomBook;
 
 /**
  * Created by Nail Shaykhraziev on 11.02.2018.
  */
-@Database(entities = {}, version = 1)
-public class AppDatabase extends RoomDatabase {
+@Database(entities = {RoomBook.class, RoomAuthor.class}, version = 1)
+@TypeConverters({DateConverter.class, GenreConverter.class})
+public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public static AppDatabase getAppDatabase(Context context) {
+    public static AppDatabase getAppDatabase() {
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class,
-                            "user-database")
-                            .build();
+            INSTANCE = Room.databaseBuilder(App.getContext(), AppDatabase.class,
+                    "user-database")
+                    .allowMainThreadQueries()
+                    .build();
         }
         return INSTANCE;
     }
+
+    public abstract BookDao getBookDao();
+
+    public abstract AuthorDao getAuthorDao();
 
     public static void destroyInstance() {
         INSTANCE = null;

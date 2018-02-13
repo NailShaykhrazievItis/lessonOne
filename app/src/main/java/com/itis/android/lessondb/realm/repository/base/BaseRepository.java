@@ -1,4 +1,4 @@
-package com.itis.android.lessondb.realm;
+package com.itis.android.lessondb.realm.repository.base;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,10 +13,13 @@ import io.realm.RealmObject;
 
 public abstract class BaseRepository {
 
+    protected Realm getRealm() {
+        return Realm.getDefaultInstance();
+    }
+
     protected long nextKey(Realm realm, final Class<? extends RealmObject> c) {
         Number maxId = realm.where(c).max("id");
-        long nextId = (maxId == null) ? 1 : maxId.longValue() + 1;
-        return nextId;
+        return (maxId == null) ? 1 : maxId.longValue() + 1;
     }
 
     protected void clearDB() {

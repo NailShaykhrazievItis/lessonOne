@@ -3,9 +3,10 @@
 
     <string name="action_clear">Clear</string>
     <string name="add">add</string>
-    <string name="author">Author</string>
+    <string name="realmAuthor">Author</string>
     <string name="name">Name</string>
     <string name="field_one">Field one</string>
     <string name="field_two">Field two</string>
     <string name="field_three">Field three</string>
+    <string name="add_book">Add roomBook to db</string>
 </resources>
