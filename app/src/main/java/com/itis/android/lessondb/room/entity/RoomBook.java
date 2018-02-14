@@ -21,8 +21,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 entity = RoomAuthor.class,
                 parentColumns = "id",
                 childColumns = "author_id",
-                onDelete = CASCADE)
-)
+                onDelete = CASCADE))
 public class RoomBook implements Book{
 
     @PrimaryKey(autoGenerate = true)
@@ -33,7 +32,7 @@ public class RoomBook implements Book{
 
     private String desc;
 
-    private Date start;
+    private Date releaseDate;
 
     private Genre genre = Genre.NUN;
 
@@ -65,12 +64,12 @@ public class RoomBook implements Book{
         this.desc = desc;
     }
 
-    public Date getStart() {
-        return start;
+    public Date getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Genre getGenre() {
