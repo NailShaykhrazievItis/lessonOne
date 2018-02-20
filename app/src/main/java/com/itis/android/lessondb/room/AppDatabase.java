@@ -10,13 +10,15 @@ import com.itis.android.lessondb.room.converters.DateConverter;
 import com.itis.android.lessondb.room.converters.GenreConverter;
 import com.itis.android.lessondb.room.dao.AuthorDao;
 import com.itis.android.lessondb.room.dao.BookDao;
+import com.itis.android.lessondb.room.dao.PublisherDao;
 import com.itis.android.lessondb.room.entity.RoomAuthor;
 import com.itis.android.lessondb.room.entity.RoomBook;
+import com.itis.android.lessondb.room.entity.RoomPublisher;
 
 /**
  * Created by Nail Shaykhraziev on 11.02.2018.
  */
-@Database(entities = {RoomBook.class, RoomAuthor.class}, version = 1)
+@Database(entities = {RoomBook.class, RoomAuthor.class, RoomPublisher.class}, version = 1)
 @TypeConverters({DateConverter.class, GenreConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -35,6 +37,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract BookDao getBookDao();
 
     public abstract AuthorDao getAuthorDao();
+
+    public abstract PublisherDao getPublisherDao();
 
     public static void destroyInstance() {
         INSTANCE = null;
