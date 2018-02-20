@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
 import com.itis.android.lessondb.realm.RepositryProvider;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     private MainAdapter adapter;
 
-    private boolean isRoom = true;
+    private boolean isRoom = App.isRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,12 +147,15 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         });
     }
 
+
     private void changeData(@NonNull List<RealmBook> books) {
 //        adapter.changeDataSet(books);
+
+        adapter.changeDataSet((List<Book>)(List<?>)books);
     }
 
     private void roomChangeData(@NonNull List<RoomBook> books) {
-        adapter.changeDataSet(books);
+        adapter.changeDataSet((List<Book>)(List<?>)books);
     }
 
     private void handleError(Throwable throwable) {

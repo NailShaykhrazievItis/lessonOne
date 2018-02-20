@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.realm.RepositryProvider;
 import com.itis.android.lessondb.realm.entity.RealmBook;
@@ -19,7 +20,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tvFieldTwo;
     private TextView tvFieldThree;
 
-    private boolean isRoom = true;
+    private boolean isRoom = App.isRoom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

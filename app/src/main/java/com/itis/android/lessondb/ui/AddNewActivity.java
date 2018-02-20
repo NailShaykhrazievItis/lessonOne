@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.realm.RepositryProvider;
 import com.itis.android.lessondb.realm.entity.RealmAuthor;
@@ -24,7 +25,7 @@ public class AddNewActivity extends AppCompatActivity {
     private EditText etName;
     private EditText etAuthor;
 
-    private boolean isRoom = true; //costyl'
+    private boolean isRoom = App.isRoom; //costyl'
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
