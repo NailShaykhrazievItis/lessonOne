@@ -5,8 +5,54 @@
     <string name="add">add</string>
     <string name="realmAuthor">Author</string>
     <string name="name">Name</string>
-    <string name="field_one">Field one</string>
-    <string name="field_two">Field two</string>
-    <string name="field_three">Field three</string>
+    <string name="genre">Genre</string>
+    <string name="release_date">Release Date</string>
+    <string name="desc">Description</string>
     <string name="add_book">Add roomBook to db</string>
+    <string name="pick_release_date">Pick Release Date</string>
+
+    <string name="registration">Регистрация</string>
+    <string name="sing_in">Войти</string>
+
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="birthday">Дата рождения : </string>
+    <string name="city">Город</string>
+
+    <string name="sign_up">Зарегистрироваться</string>
+    <string name="select_date">Выбрать дату</string>
+    <string name="have_this_book">Есть эта книга</string>
+    <string name="get_this_book">Одолжить книгу</string>
+
+    <string name="book_name">Название книги</string>
+    <string name="start_vid_date">Дата взятия :</string>
+    <string name="end_vid_date">Дата возврата :</string>
+
+    <string name="return_book">Вернуть</string>
+
+    <string name="main_book_list">Все книги</string>
+    <string name="debtor_vid_list">Взятые книги</string>
+    <string name="lender_vid_list">Отданные книги</string>
+    <string name="my_book_list">Мои книги</string>
+    <string name="filter_action">Filter action</string>
+
+    <string name="lender_choice">Выберите того,у кого возьмете книгу</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="name_already_exist">Данное имя уже занято</string>
+    <string name="enter_correct_name">Введите правильное имя</string>
+    <string name="enter_correct_password">Введите правильный пароль</string>
+    <string name="user_not_found">Пользователь с таким именем и паролем не найден.Введите корректные данные</string>
+
+    <string name="bookId">bookId</string>
+    <string name="isOwnBook">isOwnBook</string>
+    <string name="vidId">vidId</string>
+    <string name="readerRole">readerRole</string>
+
+    <string name="debtor">debtor</string>
+    <string name="lender">lender</string>
+    <string name="lender_name">Lender name</string>
+    <string name="debtor_name">Debtor name</string>
+
 </resources>

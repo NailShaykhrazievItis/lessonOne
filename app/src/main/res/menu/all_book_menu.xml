@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/filter_books"
+        android:title="@string/filter_action"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/open_my_book_list"
+        android:title="@string/my_book_list"
+        app:showAsAction="never" />
+
+
+    <item
+        android:id="@+id/open_debtor_list"
+        android:title="@string/debtor_vid_list"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/open_lender_list"
+        android:title="@string/lender_vid_list"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_clear"
+        android:title="@string/action_clear"
+        app:showAsAction="never" />
+</menu>

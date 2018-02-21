@@ -1,16 +1,19 @@
-package com.itis.android.lessondb.ui.main;
+package com.itis.android.lessondb.ui.main.fragments.lists.book_lists.main_book_list;
 
-import android.content.Intent;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.R;
@@ -19,8 +22,13 @@ import com.itis.android.lessondb.realm.RepositryProvider;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
-import com.itis.android.lessondb.ui.AddNewActivity;
-import com.itis.android.lessondb.ui.DetailsActivity;
+import com.itis.android.lessondb.ui.base.BaseFragment;
+import com.itis.android.lessondb.ui.main.fragments.AddNewBookFragment;
+import com.itis.android.lessondb.ui.main.fragments.lists.book_lists.BookDetailsFragment;
+import com.itis.android.lessondb.ui.main.fragments.lists.book_lists.own_book_list.OwnBookListFragment;
+import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.debt_book_list.DebtListFragment;
+import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.lend_book_list.LendListFragment;
+import com.itis.android.lessondb.ui.utils.Const;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,66 +37,158 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClickListener {
+import static com.itis.android.lessondb.ui.utils.Const.isRoom;
+
+public class BookListFragment extends BaseFragment implements BookAdapter.OnItemClickListener,View.OnClickListener {
+
+    private static final String FRAGMENT_BOOK_LIST_TAG = "FRAGMENT_BOOK_LIST_TAG";
 
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
     private ProgressBar progressBar;
 
-    private MainAdapter adapter;
+    private BookAdapter adapter;
 
-    private boolean isRoom = true;
+    public static Fragment newInstance() {
+
+        return new BookListFragment();
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initViews();
+        setHasOptionsMenu(true);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        Log.d(Const.TAG_LOG,"all books");
+
+        super.onCreateView(inflater,container,savedInstanceState);
+
+        View view = inflater.inflate(R.layout.fragment_book_list, container, false);
+
+
+
+        initViews(view);
         initRecycler();
         if (isRoom) {
             roomGetAll();
         } else {
             realmGetAll();
         }
+
+        return view;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.all_book_menu,menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clear:
-                if (isRoom) {
-                    clearRoomDB();
-                } else {
-                    clearRealmDB();
-                }
-                adapter.changeDataSet(new ArrayList<>());
-                return true;
+                clearDB();
+                break;
+
+            case R.id.open_debtor_list:
+                openDebtList();
+                break;
+
+            case R.id.open_my_book_list:
+                openReaderBookList();
+                break;
+
+            case R.id.open_lender_list:
+                openLendList();
+                break;
+
+            case R.id.filter_books:
+                filterBooks();
+                break;
+
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        AppDatabase.destroyInstance();
-        super.onDestroy();
+    private void openDebtList() {
+
+        Fragment fragment = DebtListFragment.newInstance();
+
+        Const.changeFragment(this,fragment);
+    }
+
+    private void openReaderBookList() {
+
+        Fragment fragment = OwnBookListFragment.newInstance();
+
+        Const.changeFragment(this,fragment);
+    }
+
+    private void openLendList() {
+
+        Fragment fragment = LendListFragment.newInstance();
+
+        Const.changeFragment(this,fragment);
+    }
+
+    private void filterBooks(){
+        if (isRoom) {
+            roomFilter();
+        } else {
+            realmFilter();
+        }
+    }
+
+    private void roomFilter(){
+        List<RoomBook> books = AppDatabase.getAppDatabase().getBookDao().findBooksBeforeYear(Const.getFilterYear());
+        if(books != null){
+            roomChangeData(books);
+        }
+    }
+
+    private void realmFilter(){
     }
 
     public void onFabClicked(View vIew) {
-        Intent intent = new Intent(this, AddNewActivity.class);
-        startActivity(intent);
+
+        Fragment fragment = AddNewBookFragment.newInstance();
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(FRAGMENT_BOOK_LIST_TAG)
+                .commit();
     }
 
     @Override
     public void onItemClick(@NonNull Book item) {
-        Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("item", item.getId());
-        startActivity(intent);
+
+        Bundle args = new Bundle();
+        args.putLong(getString(R.string.bookId), item.getId());
+        args.putBoolean(getString(R.string.isOwnBook),false);
+
+        Fragment fragment = BookDetailsFragment.newInstance(args);
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(FRAGMENT_BOOK_LIST_TAG)
+                .commit();
+    }
+
+    private void clearDB(){
+        if (isRoom) {
+            clearRoomDB();
+        } else {
+            clearRealmDB();
+        }
+        adapter.changeDataSet(new ArrayList<>());
     }
 
     private void clearRealmDB() {
@@ -121,15 +221,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 .subscribe(this::roomChangeData, this::handleError);
     }
 
-    private void initViews() {
-        recyclerView = findViewById(R.id.rv_main);
-        fabAdd = findViewById(R.id.fab_main);
-        progressBar = findViewById(R.id.pg_main);
+    private void initViews(View view) {
+        recyclerView = view.findViewById(R.id.rv_main);
+        fabAdd = view.findViewById(R.id.fab_main);
+        progressBar = view.findViewById(R.id.pg_main);
+
+        fabAdd.setOnClickListener(this);
     }
 
     private void initRecycler() {
-        adapter = new MainAdapter(new ArrayList<>());
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new BookAdapter(new ArrayList<>());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         adapter.onAttachedToRecyclerView(recyclerView);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -184,5 +286,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         names.add("Witcher");
         names.add("Romeo and Juliet");
         return names;
+    }
+
+    @Override
+    public void onClick(View v) {
+        onFabClicked(v);
     }
 }

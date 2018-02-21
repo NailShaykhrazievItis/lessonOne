@@ -19,4 +19,8 @@ public interface BookRepository {
     RealmBook getBookById(long id);
 
     void clearDB();
+
+    List<RealmBook> isRoomBookExist(String name, String authorName, String genre);
+
+    List<RealmBook> findBooksBeforeYear(long year); //filter action
 }

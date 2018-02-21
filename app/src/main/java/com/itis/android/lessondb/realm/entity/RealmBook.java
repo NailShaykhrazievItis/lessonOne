@@ -73,4 +73,10 @@ public class RealmBook extends RealmObject implements Book {
     public void setGenre(RealmGenre genre) {
         this.genre = genre;
     }
+
+    public void setGenre(String genreStr) {
+        RealmGenre genre = new RealmGenre();
+        genre.saveEnum(Genre.valueOf(genreStr.toUpperCase()));
+        this.genre = genre;
+    }
 }

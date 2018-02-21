@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.itis.android.lessondb.ui.DetailsActivity">
+    tools:context="com.itis.android.lessondb.ui.main.fragments.lists.book_lists.BookDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,13 +13,14 @@
         android:padding="@dimen/margin.large">
 
         <TextView
+            android:id="@+id/tv_field_name_reader_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tv_vid_name_reader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -37,11 +38,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/realmAuthor"
+            android:text="@string/book_name"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_author"
+            android:id="@+id/tv_book_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -59,11 +60,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_one"
+            android:text="@string/start_vid_date"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_one"
+            android:id="@+id/tv_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -81,11 +82,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_two"
+            android:text="@string/end_vid_date"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_two"
+            android:id="@+id/tv_end_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -97,22 +98,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="@dimen/margin.large">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_book_action"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/field_three"
-            android:textColor="@color/secondary_text" />
-
-        <TextView
-            android:id="@+id/tv_field_three"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin.small"
-            android:textColor="@color/primary_text"
+            android:layout_weight="1.5"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorAccent"
+            android:text="@string/return_book"
+            android:textAllCaps="false"
             android:textSize="@dimen/text.16"
-            tools:text="The Lord of the Rings" />
+            android:textColor="@color/white"/>
+
     </LinearLayout>
 </LinearLayout>

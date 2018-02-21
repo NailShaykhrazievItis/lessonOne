@@ -1,4 +1,4 @@
-package com.itis.android.lessondb.ui.main;
+package com.itis.android.lessondb.ui.main.fragments.lists.book_lists.main_book_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,12 +13,12 @@ import com.itis.android.lessondb.room.entity.RoomBook;
  * Created by Nail Shaykhraziev on 11.02.2018.
  */
 
-public class MainItemHolder extends RecyclerView.ViewHolder {
+public class BookItemHolder extends RecyclerView.ViewHolder {
 
     private TextView name;
     private TextView author;
 
-    MainItemHolder(View itemView) {
+    BookItemHolder(View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.item_name);
         author = itemView.findViewById(R.id.item_author);
