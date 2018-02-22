@@ -18,4 +18,7 @@ public interface PublisherRepository {
     void insertPublisher(RealmPublisher realmPublisher);
 
     RealmPublisher getPublisherById(long id);
+
+    RealmPublisher getPublisherByName(String name);
+
 }

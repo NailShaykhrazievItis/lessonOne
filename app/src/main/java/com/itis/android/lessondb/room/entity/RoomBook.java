@@ -41,7 +41,7 @@ public class RoomBook implements Book {
 
     private Date releaseDate;
 
-    private Genre genre = Genre.NUN;
+    private GenreRoom genre = GenreRoom.NUN;
 
     @ColumnInfo(name = "author_id")
     private long authorId;
@@ -83,11 +83,11 @@ public class RoomBook implements Book {
         this.releaseDate = releaseDate;
     }
 
-    public Genre getGenre() {
+    public GenreRoom getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(GenreRoom genre) {
         this.genre = genre;
     }
 
@@ -105,5 +105,19 @@ public class RoomBook implements Book {
 
     public void setPublisherId(long publisherId) {
         this.publisherId = publisherId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "RoomBook{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", genre=" + genre +
+                ", authorId=" + authorId +
+                ", publisherId=" + publisherId +
+                '}';
     }
 }

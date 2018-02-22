@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import com.itis.android.lessondb.room.entity.Genre;
+import com.itis.android.lessondb.room.entity.GenreRoom;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public interface BookDao {
     Single<RoomBook> loadBookById(long bookId); // room supports Single, Maybe, Flowable
 
     @Query("UPDATE book SET genre = :genre WHERE id = :bookId") //update example
-    void updateGenreById(long bookId, Genre genre);
+    void updateGenreById(long bookId, GenreRoom genre);
 
     @Query("DELETE FROM book")
     void clearBookTable();

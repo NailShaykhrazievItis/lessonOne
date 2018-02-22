@@ -4,7 +4,7 @@ package com.itis.android.lessondb.room.entity;
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 
-public enum Genre {
+public enum GenreRoom {
     NUN(0),
     COMEDY(1),
     DRAMA(2),
@@ -12,7 +12,7 @@ public enum Genre {
 
     private int code;
 
-    Genre(int code) {
+    GenreRoom(int code) {
         this.code = code;
     }
 

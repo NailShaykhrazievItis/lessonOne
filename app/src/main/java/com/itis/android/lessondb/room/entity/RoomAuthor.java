@@ -42,4 +42,13 @@ public class RoomAuthor {
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
     }
+
+    @Override
+    public String toString() {
+        return "RoomAuthor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
 }

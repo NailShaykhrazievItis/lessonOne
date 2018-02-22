@@ -49,4 +49,15 @@ public class RealmAuthor extends RealmObject {
     public void setBookRealmList(RealmList<RealmBook> bookRealmList) {
         this.bookRealmList = bookRealmList;
     }
+
+
+    @Override
+    public String toString() {
+        return "RealmAuthor{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                ", bookRealmList=" + bookRealmList +
+                '}';
+    }
 }

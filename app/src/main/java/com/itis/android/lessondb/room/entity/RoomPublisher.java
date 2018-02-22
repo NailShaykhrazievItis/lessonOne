@@ -41,4 +41,14 @@ public class RoomPublisher {
     public void setAddress(String address) {
         this.address = address;
     }
+
+
+    @Override
+    public String toString() {
+        return "RoomPublisher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

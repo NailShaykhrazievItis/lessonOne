@@ -17,7 +17,7 @@ public class App extends Application {
 
     private static Context sContext;
 
-    public static final boolean isRoom = false;
+    public static final boolean isRoom = true;
 
     @Override
     public void onCreate() {

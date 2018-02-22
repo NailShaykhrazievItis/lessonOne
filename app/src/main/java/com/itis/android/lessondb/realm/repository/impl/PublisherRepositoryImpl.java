@@ -33,4 +33,9 @@ public class PublisherRepositoryImpl extends BaseRepository implements Publisher
     public RealmPublisher getPublisherById(long id) {
         return getRealm().where(RealmPublisher.class).equalTo("id", id).findFirst();
     }
+
+    @Override
+    public RealmPublisher getPublisherByName(String name) {
+        return getRealm().where(RealmPublisher.class).equalTo("name", name).findFirst();
+    }
 }

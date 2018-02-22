@@ -49,5 +49,13 @@ public class RealmPublisher extends RealmObject {
         this.bookRealmList = bookRealmList;
     }
 
-
+    @Override
+    public String toString() {
+        return "RealmPublisher{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", bookRealmList=" + bookRealmList +
+                '}';
+    }
 }

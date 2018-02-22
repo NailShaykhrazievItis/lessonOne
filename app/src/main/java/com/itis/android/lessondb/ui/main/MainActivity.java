@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private void clearRoomDB() {
         AppDatabase.getAppDatabase().getBookDao().clearBookTable();
         AppDatabase.getAppDatabase().getAuthorDao().clearAuthorTable();
+        AppDatabase.getAppDatabase().getPublisherDao().clearPublisherTable();
     }
 
     private void realmGetAll() {
