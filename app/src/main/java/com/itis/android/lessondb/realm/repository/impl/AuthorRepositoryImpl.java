@@ -20,6 +20,12 @@ public class AuthorRepositoryImpl extends BaseRepository implements AuthorReposi
     }
 
     @Override
+    public RealmAuthor getAuthorByName(String authorName) {
+        return getRealm().where(RealmAuthor.class).equalTo("name", authorName).findFirst();
+    }
+
+
+    @Override
     public void insertAuthor(RealmAuthor realmAuthor) {
         executeTransaction(realm -> {
             long id = nextKey(realm, RealmAuthor.class); // auto-increment in realm

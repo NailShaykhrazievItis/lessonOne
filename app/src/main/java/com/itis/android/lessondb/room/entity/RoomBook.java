@@ -17,12 +17,16 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  */
 @Entity(tableName = "book",
         indices = {@Index(value = {"id"}, unique = true)},
-        foreignKeys = @ForeignKey(
-                entity = RoomAuthor.class,
-                parentColumns = "id",
-                childColumns = "author_id",
-                onDelete = CASCADE))
-public class RoomBook implements Book{
+        foreignKeys = {
+                @ForeignKey(entity = RoomAuthor.class,
+                        parentColumns = "id",
+                        childColumns = "author_id",
+                        onDelete = CASCADE),
+                @ForeignKey(entity = RoomPublishing.class,
+                        parentColumns = "id",
+                        childColumns = "publish_id")
+        })
+public class RoomBook implements Book {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -38,6 +42,17 @@ public class RoomBook implements Book{
 
     @ColumnInfo(name = "author_id")
     private long authorId;
+
+    @ColumnInfo(name = "publish_id")
+    private long publishId;
+
+    public long getPublishId() {
+        return publishId;
+    }
+
+    public void setPublishId(long publishId) {
+        this.publishId = publishId;
+    }
 
     @Override
     public long getId() {

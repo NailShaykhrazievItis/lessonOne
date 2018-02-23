@@ -7,5 +7,6 @@ package com.itis.android.lessondb.realm.entity;
 public enum Genre {
     FANTASY,
     COMEDY,
-    DRAMA;
+    DRAMA,
+    NUN;
 }

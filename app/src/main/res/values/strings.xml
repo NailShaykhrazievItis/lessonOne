@@ -4,9 +4,15 @@
     <string name="action_clear">Clear</string>
     <string name="add">add</string>
     <string name="realmAuthor">Author</string>
-    <string name="name">Name</string>
+    <string name="name">Title</string>
+    <string name="desc">Description</string>
+    <string name="releaseDate">Release Date</string>
+    <string name="genre">Genre</string>
+    <string name="publish">Publishing House</string>
     <string name="field_one">Field one</string>
     <string name="field_two">Field two</string>
     <string name="field_three">Field three</string>
     <string name="add_book">Add roomBook to db</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
 </resources>

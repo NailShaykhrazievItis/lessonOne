@@ -14,6 +14,8 @@ public interface AuthorRepository {
 
     Observable<List<RealmAuthor>> getAllAuthors();
 
+    RealmAuthor getAuthorByName(String authorName);
+
     void insertAuthor(RealmAuthor realmAuthor);
 
     RealmAuthor getAuthorById(long id);
