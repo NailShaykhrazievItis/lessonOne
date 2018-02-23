@@ -32,6 +32,7 @@ import java.util.Date;
 public class AddNewActivity extends AppCompatActivity {
 
     private EditText etName;
+    private EditText etDescription;
     private EditText etAuthor;
 
     private EditText etPublisher;
@@ -43,8 +44,8 @@ public class AddNewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new);
         etName = findViewById(R.id.et_name);
+        etDescription = findViewById(R.id.et_description);
         etAuthor = findViewById(R.id.et_author);
-
         etPublisher = findViewById(R.id.et_publisher);
         dpBook = findViewById(R.id.dp_book);
         etGenre = findViewById(R.id.et_genre);
@@ -70,6 +71,7 @@ public class AddNewActivity extends AppCompatActivity {
         }
 
         String name = etName.getText().toString().trim();
+        String description = etDescription.getText().toString().trim();
         String authorName = etAuthor.getText().toString().trim();
         String publisherName = etPublisher.getText().toString().trim();
 
@@ -83,16 +85,17 @@ public class AddNewActivity extends AppCompatActivity {
         String genreString = etGenre.getText().toString().trim();
 
         if (App.isRoom) {
-            roomFlow(name, authorName, publisherName, genreString, bookDate);
+            roomFlow(name, description, authorName, publisherName, genreString, bookDate);
         } else {
-            realmFlow(name, authorName, publisherName, genreString, bookDate);
+            realmFlow(name, description, authorName, publisherName, genreString, bookDate);
         }
         Toast.makeText(this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
     }
 
-    private void realmFlow(String name, String authorName, String publisherName, String genreString, Date bookDate) {
+    private void realmFlow(String name, String description, String authorName, String publisherName, String genreString, Date bookDate) {
         RealmBook book = new RealmBook();
         book.setTitle(name);
+        book.setDesc(description);
         book.setReleaseDate(bookDate);
 
         RealmAuthor realmAuthor = RepositryProvider.provideAuthorRepository().getAuthorByName(authorName);
@@ -120,9 +123,10 @@ public class AddNewActivity extends AppCompatActivity {
         Log.d("Alm", "Realm book add:" + book.toString());
     }
 
-    private void roomFlow(String name, String authorName, String publisherName, String genreString, Date bookDate) {
+    private void roomFlow(String name, String description, String authorName, String publisherName, String genreString, Date bookDate) {
         RoomBook book = new RoomBook();
         book.setTitle(name);
+        book.setDesc(description);
         book.setReleaseDate(bookDate);
 
         GenreRoom genreRoom = GenreRoom.valueOf(genreString);
