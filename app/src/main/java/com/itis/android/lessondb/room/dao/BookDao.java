@@ -36,4 +36,8 @@ public interface BookDao {
 
     @Query("DELETE FROM book")
     void clearBookTable();
+
+    @Query("SELECT * from book WHERE author_id = " +
+            "(SELECT id from author WHERE name = :author)")
+    List<RoomBook> getBooksByAuthor(String author);
 }

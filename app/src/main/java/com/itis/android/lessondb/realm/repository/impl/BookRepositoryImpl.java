@@ -37,4 +37,11 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     public void clearDB() {
         super.clearDB();
     }
+
+    @Override
+    public Observable<List<RealmBook>> getBooksByAuthor(String author) {
+        return Observable.just(getRealm().where(RealmBook.class).equalTo("realmAuthor.name", author).findAll());
+    }
+
+
 }

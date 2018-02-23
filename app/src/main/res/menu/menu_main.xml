@@ -3,6 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_filter"
+        android:title="@string/author_filter"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_add_reader"
+        android:title="@string/add_reader"
+        app:showAsAction="never"
+        />
+
+    <item
+        android:id="@+id/action_list_readers"
+        android:title="@string/reader_list"
+        app:showAsAction="never"
+        />
+
+    <item
         android:id="@+id/action_clear"
         android:title="@string/action_clear"
         app:showAsAction="never" />

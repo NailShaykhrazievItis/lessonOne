@@ -19,10 +19,12 @@
         </activity>
         <activity
             android:name=".ui.DetailsActivity"
-            android:parentActivityName=".ui.main.MainActivity"/>
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
-            android:name=".ui.AddNewActivity"
-            android:parentActivityName=".ui.main.MainActivity"/>
+            android:name=".ui.add_new.AddNewActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.reader_list.ReaderListActivity" />
+        <activity android:name=".ui.ReaderAddActivity"></activity>
     </application>
 
 </manifest>
