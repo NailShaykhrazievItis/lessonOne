@@ -1,11 +1,9 @@
 package com.itis.android.lessondb.realm.repository.impl;
 
-import android.widget.Toast;
-
-import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.realm.entity.RealmReader;
 import com.itis.android.lessondb.realm.repository.ReaderRepository;
 import com.itis.android.lessondb.realm.repository.base.BaseRepository;
+import com.itis.android.lessondb.ui.utils.ViewHelper;
 
 import java.util.List;
 
@@ -24,18 +22,17 @@ public class ReaderRepositoryImpl extends BaseRepository implements ReaderReposi
     @Override
     public void insertReader(RealmReader reader) {
         try {
-        RealmReader realmReader = getReaderByName(reader.getUsername());
-        if(realmReader != null){
-            throw new IllegalArgumentException("Имя пользователя должно быть уникальным");
-        }
-        executeTransaction(realm -> {
-            long id = nextKey(realm, RealmReader.class);
-            reader.setId(id);
-            realm.insertOrUpdate(reader);
-        });
-
-        }catch (IllegalArgumentException ex){
-            Toast.makeText(App.getContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+            RealmReader realmReader = getReaderByName(reader.getUsername());
+            if (realmReader != null) {
+                throw new IllegalArgumentException("Имя пользователя должно быть уникальным");
+            }
+            executeTransaction(realm -> {
+                long id = nextKey(realm, RealmReader.class);
+                reader.setId(id);
+                realm.insertOrUpdate(reader);
+            });
+        } catch (IllegalArgumentException ex) {
+            ViewHelper.showToast(ex.getMessage());
         }
     }
 

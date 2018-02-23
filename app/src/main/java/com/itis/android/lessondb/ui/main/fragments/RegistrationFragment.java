@@ -105,8 +105,6 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
                 signUpNewReader();
                 break;
         }
-
-
     }
 
     private void showDatePicker(){
@@ -177,25 +175,19 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
     private void setEditListener(){
         etUsername.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (shouldShowError()) {
                     showError();
-                }else {
+                } else {
                     hideError();
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
 
     }

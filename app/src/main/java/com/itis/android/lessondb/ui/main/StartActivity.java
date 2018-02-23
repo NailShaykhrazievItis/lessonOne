@@ -22,5 +22,4 @@ public class StartActivity extends FragmentHostActivity {
         AppDatabase.destroyInstance();
         super.onDestroy();
     }
-
 }

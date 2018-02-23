@@ -4,7 +4,9 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 /**
@@ -12,6 +14,8 @@ import java.util.Locale;
  */
 
 public class DateUtil {
+
+    private final static int FILTER_YEAR = 1950;
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
@@ -35,4 +39,13 @@ public class DateUtil {
         }
         return null;
     }
+
+    public static long getFilterYear(){
+        Date date = new Date();
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.set(Calendar.YEAR,FILTER_YEAR);
+        return calendar.getTime().getTime();
+    }
+
 }

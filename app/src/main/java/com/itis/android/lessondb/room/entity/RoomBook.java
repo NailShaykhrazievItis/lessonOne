@@ -34,7 +34,7 @@ public class RoomBook implements Book {
 
     private Date releaseDate;
 
-    private Genre genre = Genre.NUN;;
+    private Genre genre = Genre.NUN;
 
     @ColumnInfo(name = "author_id")
     private long authorId;

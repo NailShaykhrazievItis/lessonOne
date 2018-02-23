@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity(tableName = "reader",
         indices = {@Index(value = {"id"}, unique = true),
                     @Index(value = {"username"}, unique = true),
-                    @Index(value = {"username","password"})})
+                    @Index(value = {"username", "password"})})
 public class RoomReader {
 
     @PrimaryKey(autoGenerate = true)

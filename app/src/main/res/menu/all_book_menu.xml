@@ -7,12 +7,10 @@
         android:title="@string/filter_action"
         app:showAsAction="never" />
 
-
     <item
         android:id="@+id/open_my_book_list"
         android:title="@string/my_book_list"
         app:showAsAction="never" />
-
 
     <item
         android:id="@+id/open_debtor_list"

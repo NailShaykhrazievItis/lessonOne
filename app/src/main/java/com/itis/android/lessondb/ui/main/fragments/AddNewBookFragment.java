@@ -46,7 +46,6 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
     private Date releaseDate;
 
     public static Fragment newInstance() {
-
         return new AddNewBookFragment();
     }
 
@@ -82,7 +81,6 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
         DatePickerFragment newFragment = new DatePickerFragment();
         newFragment.setReleaseListener(this);
         newFragment.show(getFragmentManager(), SHOW_DATE_DIALOG);
-
     }
 
     public void onAddBookClicked(View v) {
@@ -104,7 +102,6 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()){
 
             case R.id.btn_add:
@@ -115,7 +112,6 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
                 onPickDateClicked(v);
                 break;
         }
-
     }
 
     private void realmFlow(String name, String authorName, String genre, String desc) {
@@ -182,6 +178,4 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
                                     calendar.get(Calendar.YEAR);
         btnReleaseDate.setText(date);
     }
-
-
 }

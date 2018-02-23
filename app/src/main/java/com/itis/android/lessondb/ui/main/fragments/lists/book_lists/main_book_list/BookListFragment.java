@@ -29,6 +29,8 @@ import com.itis.android.lessondb.ui.main.fragments.lists.book_lists.own_book_lis
 import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.debt_book_list.DebtListFragment;
 import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.lend_book_list.LendListFragment;
 import com.itis.android.lessondb.ui.utils.Const;
+import com.itis.android.lessondb.ui.utils.DateUtil;
+import com.itis.android.lessondb.ui.utils.FragmentHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.itis.android.lessondb.ui.utils.Const.isRoom;
 
-public class BookListFragment extends BaseFragment implements BookAdapter.OnItemClickListener,View.OnClickListener {
+public class BookListFragment extends BaseFragment implements BookAdapter.OnItemClickListener, View.OnClickListener {
 
     private static final String FRAGMENT_BOOK_LIST_TAG = "FRAGMENT_BOOK_LIST_TAG";
 
@@ -120,21 +122,21 @@ public class BookListFragment extends BaseFragment implements BookAdapter.OnItem
 
         Fragment fragment = DebtListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     private void openReaderBookList() {
 
         Fragment fragment = OwnBookListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     private void openLendList() {
 
         Fragment fragment = LendListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     private void filterBooks(){
@@ -146,7 +148,7 @@ public class BookListFragment extends BaseFragment implements BookAdapter.OnItem
     }
 
     private void roomFilter(){
-        List<RoomBook> books = AppDatabase.getAppDatabase().getBookDao().findBooksBeforeYear(Const.getFilterYear());
+        List<RoomBook> books = AppDatabase.getAppDatabase().getBookDao().findBooksBeforeYear(DateUtil.getFilterYear());
         if(books != null){
             roomChangeData(books);
         }

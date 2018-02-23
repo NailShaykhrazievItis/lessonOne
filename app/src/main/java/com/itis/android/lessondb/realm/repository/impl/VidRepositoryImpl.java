@@ -105,7 +105,6 @@ public class VidRepositoryImpl extends BaseRepository implements VidRepository {
             executeTransaction(realm -> {
                 realm.insertOrUpdate(vid);
             });
-
         }
     }
 

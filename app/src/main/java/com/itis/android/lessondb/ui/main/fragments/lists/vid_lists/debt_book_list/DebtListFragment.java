@@ -23,6 +23,7 @@ import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.VidDetailsFra
 import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.VidItem;
 import com.itis.android.lessondb.ui.main.fragments.lists.vid_lists.lend_book_list.LendListFragment;
 import com.itis.android.lessondb.ui.utils.Const;
+import com.itis.android.lessondb.ui.utils.FragmentHelper;
 import com.itis.android.lessondb.ui.utils.OnItemClickListener;
 import com.itis.android.lessondb.ui.utils.SimpleSession;
 
@@ -125,21 +126,21 @@ public class DebtListFragment extends BaseFragment implements OnItemClickListene
 
         Fragment fragment = LendListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     private void openMainBookList() {
 
         Fragment fragment = BookListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     private void openOwnBookList() {
 
         Fragment fragment = OwnBookListFragment.newInstance();
 
-        Const.changeFragment(this,fragment);
+        FragmentHelper.changeFragment(this,fragment);
     }
 
     @Override

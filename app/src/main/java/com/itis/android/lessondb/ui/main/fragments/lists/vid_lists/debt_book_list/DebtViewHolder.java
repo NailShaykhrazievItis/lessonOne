@@ -17,7 +17,6 @@ public class DebtViewHolder extends RecyclerView.ViewHolder {
 
     public TextView tvBookName;
 
-
     public DebtViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
         super(itemView);
 

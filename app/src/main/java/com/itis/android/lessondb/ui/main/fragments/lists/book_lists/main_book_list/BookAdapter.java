@@ -65,8 +65,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookItemHolder> {
         return items.get(pos);
     }
 
-    void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener3) {
-        onItemClickListener = onItemClickListener3;
+    void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
