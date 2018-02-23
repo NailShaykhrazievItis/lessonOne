@@ -23,6 +23,7 @@ public abstract class BaseRepository {
     }
 
     protected void clearDB() {
+//        Log.d("Alm","realm clearDB");
         executeTransaction(realm -> realm.deleteAll());
     }
 
@@ -31,6 +32,7 @@ public abstract class BaseRepository {
         try {
             realm = Realm.getDefaultInstance();
             realm.executeTransaction(transaction);
+//            Log.d("Alm","realm executed Transaction");
         } catch (Throwable e) {
             Log.e("Realm", e.getMessage());
         } finally {

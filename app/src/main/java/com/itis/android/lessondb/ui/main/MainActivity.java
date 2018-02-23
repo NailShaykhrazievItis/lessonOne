@@ -24,6 +24,7 @@ import com.itis.android.lessondb.ui.AddNewActivity;
 import com.itis.android.lessondb.ui.DetailsActivity;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,11 +47,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         setContentView(R.layout.activity_main);
         initViews();
         initRecycler();
-        if (isRoom) {
-            roomGetAll();
-        } else {
-            realmGetAll();
-        }
+        getAllFromDb();
     }
 
     @Override
@@ -70,6 +67,16 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 }
                 adapter.changeDataSet(new ArrayList<>());
                 return true;
+            case R.id.action_filter:
+                item.setChecked(!item.isChecked());
+                if(item.isChecked()){
+                    item.setIcon(R.drawable.ic_filter_list_white_24dp);
+                    getFilteredFromDb();
+                }else{
+                    item.setIcon(R.drawable.ic_filter_list_black_24dp);
+                    getAllFromDb();
+                }
+                return false;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,13 +109,21 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         AppDatabase.getAppDatabase().getPublisherDao().clearPublisherTable();
     }
 
+    private void getAllFromDb() {
+        if (isRoom) {
+            roomGetAll();
+        } else {
+            realmGetAll();
+        }
+    }
+
     private void realmGetAll() {
         RepositryProvider.provideBookRepository()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doOnTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(this::showLoading)
+                .doOnTerminate(this::hideLoading)
                 .subscribe(this::changeData, this::handleError);
     }
 
@@ -116,11 +131,43 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         AppDatabase.getAppDatabase()
                 .getBookDao()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doAfterTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(this::showLoading)
+                .doAfterTerminate(this::hideLoading)
                 .subscribe(this::roomChangeData, this::handleError);
+    }
+
+    private void getFilteredFromDb() {
+        if (isRoom) {
+            roomGetFiltered();
+        } else {
+            realmGetFiltered();
+        }
+    }
+
+    private void realmGetFiltered() {
+        RepositryProvider.provideBookRepository()
+                .getFilteredBooks(new GregorianCalendar(2015,0,0).getTime())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(this::showLoading)
+                .doOnTerminate(this::hideLoading)
+                .subscribe(this::changeData, this::handleError);
+    }
+
+    private void roomGetFiltered() {
+        //TODO
+
+        AppDatabase.getAppDatabase()
+                .getBookDao()
+                .getFilteredBooks(new GregorianCalendar(2015,0,0).getTime())
+                .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(this::showLoading)
+                .doAfterTerminate(this::hideLoading)
+                .subscribe(this::roomChangeData, this::handleError);
+
     }
 
     private void initViews() {

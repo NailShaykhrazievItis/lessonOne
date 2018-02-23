@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import com.itis.android.lessondb.room.entity.GenreRoom;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Maybe;
@@ -21,6 +22,9 @@ public interface BookDao {
 
     @Query("SELECT * FROM book")
     Maybe<List<RoomBook>> getAllBooks();
+
+    @Query("SELECT * FROM book WHERE releaseDate > :date")
+    Maybe<List<RoomBook>> getFilteredBooks(Date date);
 
     @Query("SELECT * FROM book where id = :bookId LIMIT 1")
     RoomBook getBookById(long bookId);

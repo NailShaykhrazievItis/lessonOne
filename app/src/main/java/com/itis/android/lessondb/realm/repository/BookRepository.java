@@ -2,6 +2,7 @@ package com.itis.android.lessondb.realm.repository;
 
 import com.itis.android.lessondb.realm.entity.RealmBook;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -13,6 +14,8 @@ import io.reactivex.Observable;
 public interface BookRepository {
 
     Observable<List<RealmBook>> getAllBooks();
+
+    Observable<List<RealmBook>> getFilteredBooks(Date date);
 
     void insertBook(RealmBook book);
 

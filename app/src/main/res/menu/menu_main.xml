@@ -6,4 +6,11 @@
         android:id="@+id/action_clear"
         android:title="@string/action_clear"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_filter"
+        android:checkable="true"
+        android:icon="@drawable/ic_filter_list_black_24dp"
+        android:title=""
+        app:showAsAction="always" />
+
 </menu>
