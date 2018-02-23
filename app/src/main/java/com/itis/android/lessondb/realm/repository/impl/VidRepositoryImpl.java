@@ -1,8 +1,5 @@
 package com.itis.android.lessondb.realm.repository.impl;
 
-import android.widget.Toast;
-
-import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.realm.entity.RealmReader;
 import com.itis.android.lessondb.realm.entity.RealmVid;
@@ -10,6 +7,7 @@ import com.itis.android.lessondb.realm.repository.BookRepository;
 import com.itis.android.lessondb.realm.repository.ReaderRepository;
 import com.itis.android.lessondb.realm.repository.VidRepository;
 import com.itis.android.lessondb.realm.repository.base.BaseRepository;
+import com.itis.android.lessondb.ui.utils.ViewHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -44,7 +42,7 @@ public class VidRepositoryImpl extends BaseRepository implements VidRepository {
             });
 
         }catch (IllegalArgumentException ex){
-            Toast.makeText(App.getContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+            ViewHelper.showToast(ex.getMessage());
         }
     }
 

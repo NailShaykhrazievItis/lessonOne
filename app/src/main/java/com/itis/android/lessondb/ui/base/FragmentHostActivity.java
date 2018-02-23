@@ -23,7 +23,6 @@ public abstract class FragmentHostActivity extends AppCompatActivity {
             fragmentManager.beginTransaction()
                     .add(getContainerId(),getFragment())
                     .commit();
-
         }
     }
 

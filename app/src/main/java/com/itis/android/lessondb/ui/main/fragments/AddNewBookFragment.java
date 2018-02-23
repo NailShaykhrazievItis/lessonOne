@@ -103,7 +103,6 @@ public class AddNewBookFragment extends BaseFragment implements OnDateListener,V
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-
             case R.id.btn_add:
                 onAddBookClicked(v);
                 break;

@@ -124,7 +124,6 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
             } else {
                 realmFlow(username, password, city);
             }
-
         } else {
             showError();
         }
@@ -191,7 +190,4 @@ public class RegistrationFragment extends BaseFragment implements View.OnClickLi
         });
 
     }
-
-
-
 }

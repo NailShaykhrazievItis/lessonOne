@@ -69,7 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin.normal"
         android:textColorHint="@color/secondary_text"
-        app:layout_constraintBottom_toTopOf="@+id/ti_release_date"
+        app:layout_constraintBottom_toTopOf="@+id/btn_release_date"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ti_author">
