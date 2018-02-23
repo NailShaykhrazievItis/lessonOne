@@ -8,5 +8,11 @@
     <string name="field_one">Field one</string>
     <string name="field_two">Field two</string>
     <string name="field_three">Field three</string>
-    <string name="add_book">Add roomBook to db</string>
+    <string name="add_book">Adding Successful</string>
+    <string name="date">Date</string>
+    <string name="select_date">select date</string>
+    <string name="description">Description</string>
+    <string name="genre">Genre</string>
+    <string name="release_date">Release Date</string>
+    <string name="publishing_house">Publishing House</string>
 </resources>

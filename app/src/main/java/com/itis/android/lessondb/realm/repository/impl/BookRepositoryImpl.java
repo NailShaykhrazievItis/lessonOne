@@ -20,6 +20,11 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     }
 
     @Override
+    public List<RealmBook> getAll() {
+        return getRealm().where(RealmBook.class).findAll();
+    }
+
+    @Override
     public RealmBook getBookById(long id) {
         return getRealm().where(RealmBook.class).equalTo("id", id).findFirst();
     }

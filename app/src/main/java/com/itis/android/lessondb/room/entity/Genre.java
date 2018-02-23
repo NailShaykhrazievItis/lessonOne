@@ -10,6 +10,7 @@ public enum Genre {
     DRAMA(2),
     FANTASY(3);
 
+
     private int code;
 
     Genre(int code) {
