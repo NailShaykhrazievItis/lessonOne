@@ -26,10 +26,10 @@ public class MainItemHolder extends RecyclerView.ViewHolder {
         author = itemView.findViewById(R.id.item_author);
     }
 
-    public void bind(Book book){
-        if(App.isRoom){
+    public void bind(Book book) {
+        if (App.isRoom) {
             bind((RoomBook) book);
-        }else{
+        } else {
             bind((RealmBook) book);
         }
     }

@@ -10,7 +10,7 @@ import com.itis.android.lessondb.general.Publisher;
  * Created by a9 on 20.02.18.
  */
 
-@Entity(tableName = "publisher",indices = {@Index(value = {"id"},unique = true)})
+@Entity(tableName = "publisher", indices = {@Index(value = {"id"}, unique = true)})
 public class RoomPublisher implements Publisher {
 
     @PrimaryKey(autoGenerate = true)

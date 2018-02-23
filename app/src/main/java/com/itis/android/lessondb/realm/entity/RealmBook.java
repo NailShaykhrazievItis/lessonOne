@@ -1,7 +1,6 @@
 package com.itis.android.lessondb.realm.entity;
 
 
-
 import com.itis.android.lessondb.general.Book;
 
 import java.util.Date;

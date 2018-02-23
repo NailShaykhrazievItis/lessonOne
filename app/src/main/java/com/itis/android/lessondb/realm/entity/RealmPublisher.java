@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by a9 on 20.02.18.
  */
 
-public class RealmPublisher extends RealmObject implements Publisher{
+public class RealmPublisher extends RealmObject implements Publisher {
 
     @PrimaryKey
     private long id;

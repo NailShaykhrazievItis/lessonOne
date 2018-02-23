@@ -1,6 +1,5 @@
 package com.itis.android.lessondb.realm.repository;
 
-import com.itis.android.lessondb.realm.entity.RealmAuthor;
 import com.itis.android.lessondb.realm.entity.RealmPublisher;
 
 import java.util.List;

@@ -34,6 +34,12 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AuthorsActivity extends AppCompatActivity implements AuthorsAdapter.OnItemClickListener {
 
+    private RecyclerView recyclerView;
+    private FloatingActionButton fabAdd;
+    private ProgressBar progressBar;
+
+    private AuthorsAdapter adapter;
+
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, AuthorsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -41,13 +47,11 @@ public class AuthorsActivity extends AppCompatActivity implements AuthorsAdapter
         return intent;
     }
 
-    private RecyclerView recyclerView;
-    private FloatingActionButton fabAdd;
-    private ProgressBar progressBar;
-
-    private AuthorsAdapter adapter;
-
-    private boolean isRoom = App.isRoom;
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class AuthorsActivity extends AppCompatActivity implements AuthorsAdapter
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clear:
-                if (isRoom) {
+                if (App.isRoom) {
                     clearRoomDB();
                 } else {
                     clearRealmDB();
@@ -105,7 +109,7 @@ public class AuthorsActivity extends AppCompatActivity implements AuthorsAdapter
 
     @Override
     public void onItemClick(@NonNull Author item) {
-        //TODO or not TODO?
+        //
     }
 
     private void clearRealmDB() {
@@ -119,7 +123,7 @@ public class AuthorsActivity extends AppCompatActivity implements AuthorsAdapter
     }
 
     private void getAllFromDb() {
-        if (isRoom) {
+        if (App.isRoom) {
             roomGetAll();
         } else {
             realmGetAll();

@@ -9,9 +9,6 @@ import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Author;
-import com.itis.android.lessondb.general.Book;
-import com.itis.android.lessondb.ui.main.MainAdapter;
-import com.itis.android.lessondb.ui.main.MainItemHolder;
 
 import java.util.ArrayList;
 import java.util.List;

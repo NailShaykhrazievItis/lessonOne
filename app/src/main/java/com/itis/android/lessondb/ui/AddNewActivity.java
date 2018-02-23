@@ -38,8 +38,6 @@ public class AddNewActivity extends AppCompatActivity {
     private EditText etGenre;
     private DatePicker dpBook;
 
-    private boolean isRoom = App.isRoom; //costyl'
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +59,18 @@ public class AddNewActivity extends AppCompatActivity {
     }
 
     private void onButtonAddClicked(View view) {
+
+        //check genre
+        try {
+            GenreRealm g1 = GenreRealm.valueOf(etGenre.getText().toString().trim());
+            GenreRoom g2 = GenreRoom.valueOf(etGenre.getText().toString().trim());
+        } catch (Exception e) {
+            Toast.makeText(this, getString(R.string.error), Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String name = etName.getText().toString().trim();
         String authorName = etAuthor.getText().toString().trim();
-
         String publisherName = etPublisher.getText().toString().trim();
 
         int day = dpBook.getDayOfMonth();
@@ -75,7 +82,7 @@ public class AddNewActivity extends AppCompatActivity {
 
         String genreString = etGenre.getText().toString().trim();
 
-        if (isRoom) {
+        if (App.isRoom) {
             roomFlow(name, authorName, publisherName, genreString, bookDate);
         } else {
             realmFlow(name, authorName, publisherName, genreString, bookDate);
@@ -105,8 +112,7 @@ public class AddNewActivity extends AppCompatActivity {
         book.setRealmPublisher(realmPublisher);
 
         GenreRealm genreRealm = GenreRealm.valueOf(genreString);
-//        RealmGenre realmGenre=new RealmGenre();
-//        realmGenre.saveEnum(genreRealm);
+
         book.setGenreRealm(genreRealm);
 
         RepositryProvider.provideBookRepository().insertBook(book);
@@ -132,7 +138,7 @@ public class AddNewActivity extends AppCompatActivity {
         book.setAuthorId(author.getId());
 
         RoomPublisher publisher = AppDatabase.getAppDatabase().getPublisherDao().getPublisherByName(publisherName);
-        if(publisher==null){
+        if (publisher == null) {
             publisher = new RoomPublisher();
             publisher.setName(publisherName);
             long publisherId = AppDatabase.getAppDatabase().getPublisherDao().insertPublisher(publisher);

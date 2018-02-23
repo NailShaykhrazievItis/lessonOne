@@ -4,7 +4,6 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.itis.android.lessondb.room.entity.RoomBook;
 import com.itis.android.lessondb.room.entity.RoomPublisher;
 
 import java.util.List;
@@ -23,7 +22,6 @@ public interface PublisherDao {
 
     @Query("SELECT * FROM publisher WHERE id=:publisherId LIMIT 1")
     RoomPublisher getPublisherById(long publisherId);
-
 
     @Query("SELECT * FROM publisher WHERE name=:publisherName LIMIT 1")
     RoomPublisher getPublisherByName(String publisherName);

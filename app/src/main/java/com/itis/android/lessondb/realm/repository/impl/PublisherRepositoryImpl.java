@@ -1,6 +1,5 @@
 package com.itis.android.lessondb.realm.repository.impl;
 
-import com.itis.android.lessondb.realm.entity.RealmAuthor;
 import com.itis.android.lessondb.realm.entity.RealmPublisher;
 import com.itis.android.lessondb.realm.repository.PublisherRepository;
 import com.itis.android.lessondb.realm.repository.base.BaseRepository;
@@ -17,7 +16,6 @@ public class PublisherRepositoryImpl extends BaseRepository implements Publisher
     @Override
     public Observable<List<RealmPublisher>> getAllPublishers() {
         return Observable.just(getRealm().where(RealmPublisher.class).findAll());
-
     }
 
     @Override

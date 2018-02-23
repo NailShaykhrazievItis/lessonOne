@@ -42,13 +42,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     private MainAdapter adapter;
 
-    private boolean isRoom = App.isRoom;
-
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        this.recreate();
     }
 
     @Override
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_clear:
-                if (isRoom) {
+                if (App.isRoom) {
                     clearRoomDB();
                 } else {
                     clearRealmDB();
@@ -133,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void getAllFromDb() {
-        if (isRoom) {
+        if (App.isRoom) {
             roomGetAll();
         } else {
             realmGetAll();
@@ -162,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void getFilteredFromDb() {
-        if (isRoom) {
+        if (App.isRoom) {
             roomGetFiltered();
         } else {
             realmGetFiltered();

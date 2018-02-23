@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
-import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
 
 public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
-    // need change RoomBook to RealmBook for work with Realm on this class
     private List<Book> items = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 

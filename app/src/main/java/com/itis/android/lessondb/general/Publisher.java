@@ -6,5 +6,6 @@ package com.itis.android.lessondb.general;
 
 public interface Publisher {
     long getId();
+
     String getName();
 }

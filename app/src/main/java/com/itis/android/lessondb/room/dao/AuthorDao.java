@@ -5,7 +5,6 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.itis.android.lessondb.room.entity.RoomAuthor;
-import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.List;
 

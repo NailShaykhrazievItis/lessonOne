@@ -6,6 +6,7 @@ package com.itis.android.lessondb.general;
 
 public interface Author {
     long getId();
+
     String getName();
 
 }
