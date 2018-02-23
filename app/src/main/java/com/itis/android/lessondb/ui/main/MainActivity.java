@@ -1,12 +1,18 @@
 package com.itis.android.lessondb.ui.main;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +21,7 @@ import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
-import com.itis.android.lessondb.realm.RepositryProvider;
+import com.itis.android.lessondb.realm.RepositoryProvider;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
@@ -37,12 +43,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     private MainAdapter adapter;
 
-    private boolean isRoom = true;
+    private boolean isRoom = false;
+
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         initViews();
         initRecycler();
         if (isRoom) {
@@ -55,6 +66,30 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search)
+                .getActionView();
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        // listening to search query text change
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // filter recycler view when query submitted
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                // filter recycler view when text is changed
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
         return true;
     }
 
@@ -68,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                     clearRealmDB();
                 }
                 adapter.changeDataSet(new ArrayList<>());
+                return true;
+            case R.id.action_search:
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -92,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void clearRealmDB() {
-        RepositryProvider.provideBookRepository().clearDB();
+        RepositoryProvider.provideBookRepository().clearDB();
     }
 
     private void clearRoomDB() {
@@ -101,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void realmGetAll() {
-        RepositryProvider.provideBookRepository()
+        RepositoryProvider.provideBookRepository()
                 .getAllBooks()
                 .doOnSubscribe(this::showLoading)
                 .doOnTerminate(this::hideLoading)
@@ -130,6 +167,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private void initRecycler() {
         adapter = new MainAdapter(new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new MyDividerItemDecoration(this, DividerItemDecoration.VERTICAL, 36));
         adapter.onAttachedToRecyclerView(recyclerView);
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
@@ -147,11 +186,11 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void changeData(@NonNull List<RealmBook> books) {
-//        adapter.changeDataSet(books);
+        adapter.changeDataSet(books);
     }
 
     private void roomChangeData(@NonNull List<RoomBook> books) {
-        adapter.changeDataSet(books);
+        //adapter.changeDataSet(books);
     }
 
     private void handleError(Throwable throwable) {

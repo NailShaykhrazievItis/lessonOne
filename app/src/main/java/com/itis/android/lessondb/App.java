@@ -3,7 +3,7 @@ package com.itis.android.lessondb;
 import android.app.Application;
 import android.content.Context;
 
-import com.itis.android.lessondb.realm.RepositryProvider;
+import com.itis.android.lessondb.realm.RepositoryProvider;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -22,7 +22,7 @@ public class App extends Application {
         super.onCreate();
         App.sContext = getApplicationContext();
         setupRealm();
-        RepositryProvider.init();
+        RepositoryProvider.init();
     }
 
     public static Context getContext() {
