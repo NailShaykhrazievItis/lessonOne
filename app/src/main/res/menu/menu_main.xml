@@ -3,14 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_clear"
-        android:title="@string/action_clear"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_filter"
         android:checkable="true"
         android:icon="@drawable/ic_filter_list_black_24dp"
         android:title=""
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_clear"
+        android:title="@string/action_clear"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_books"
+        android:title="@string/books"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_authors"
+        android:title="@string/authors"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_publishers"
+        android:title="@string/publishers"
+        app:showAsAction="never" />
 
 </menu>

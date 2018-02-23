@@ -5,8 +5,6 @@ package com.itis.android.lessondb.general;
  */
 
 public interface Book {
-
-    String getTitle();
-
     long getId();
+    String getTitle();
 }

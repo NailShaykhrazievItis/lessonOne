@@ -11,4 +11,7 @@
     <string name="field_two">Field two</string>
     <string name="field_three">Field three</string>
     <string name="add_book">Add Book to db</string>
+    <string name="books">Books</string>
+    <string name="authors">Authors</string>
+    <string name="publishers">Publishers</string>
 </resources>

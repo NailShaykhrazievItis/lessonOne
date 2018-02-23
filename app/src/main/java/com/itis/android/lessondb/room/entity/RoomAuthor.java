@@ -4,13 +4,15 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.itis.android.lessondb.general.Author;
+
 import java.util.Date;
 
 /**
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 @Entity(tableName = "author", indices = {@Index(value = {"id"}, unique = true)})
-public class RoomAuthor {
+public class RoomAuthor implements Author {
 
     @PrimaryKey(autoGenerate = true)
     private long id;

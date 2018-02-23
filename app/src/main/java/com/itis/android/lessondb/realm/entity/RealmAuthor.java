@@ -1,5 +1,7 @@
 package com.itis.android.lessondb.realm.entity;
 
+import com.itis.android.lessondb.general.Author;
+
 import java.util.Date;
 
 import io.realm.RealmList;
@@ -10,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 
-public class RealmAuthor extends RealmObject {
+public class RealmAuthor extends RealmObject implements Author {
 
     @PrimaryKey
     private long id;

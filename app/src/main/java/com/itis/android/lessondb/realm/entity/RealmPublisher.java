@@ -1,5 +1,7 @@
 package com.itis.android.lessondb.realm.entity;
 
+import com.itis.android.lessondb.general.Publisher;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -8,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by a9 on 20.02.18.
  */
 
-public class RealmPublisher extends RealmObject {
+public class RealmPublisher extends RealmObject implements Publisher{
 
     @PrimaryKey
     private long id;

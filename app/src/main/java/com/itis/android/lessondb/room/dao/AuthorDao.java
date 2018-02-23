@@ -5,12 +5,20 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.itis.android.lessondb.room.entity.RoomAuthor;
+import com.itis.android.lessondb.room.entity.RoomBook;
+
+import java.util.List;
+
+import io.reactivex.Maybe;
 
 /**
  * Created by Nail Shaykhraziev on 13.02.2018.
  */
 @Dao
 public interface AuthorDao {
+
+    @Query("SELECT * FROM author")
+    Maybe<List<RoomAuthor>> getAllAuthors();
 
     @Query("SELECT * FROM author WHERE id = :authorId LIMIT 1")
     RoomAuthor getAuthorById(long authorId);
