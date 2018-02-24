@@ -1,39 +1,33 @@
 package com.itis.android.lessondb.ui.main;
 
+import android.content.Entity;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.itis.android.lessondb.R;
-import com.itis.android.lessondb.general.Book;
-import com.itis.android.lessondb.room.entity.RoomBook;
+import com.itis.android.lessondb.realm.entity.RealmBook;
+import com.itis.android.lessondb.ui.base.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Nail Shaykhraziev on 11.02.2018.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
+public class MainAdapter extends BaseAdapter<RealmBook, MainItemHolder> implements Filterable {
+    private List<RealmBook> itemsCopy = new ArrayList<>();         // source items
+    private List<String> stringFilterList;  // string performance of List<Entity>
 
-    // need change RoomBook to RealmBook for work with Realm on this class
-    private List<RoomBook> items = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
-
-    private final View.OnClickListener internalListener = (view) -> {
-        if (onItemClickListener != null) {
-            int position = (int) view.getTag();
-            Book item = getItem(position);
-            onItemClickListener.onItemClick(item);
-        }
-    };
-
-    MainAdapter(List<RoomBook> items) {
-        this.items.addAll(items);
+    MainAdapter(List<RealmBook> items) {
+        this.items = items;
+        this.itemsCopy = items;
+        this.stringFilterList = getStringList(items);
     }
 
     @Override
@@ -44,7 +38,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public void onBindViewHolder(MainItemHolder holder, int position) {
-        RoomBook book = getItem(position);
+        RealmBook book = itemsCopy.get(position);
         holder.bind(book);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(internalListener);
@@ -52,24 +46,62 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsCopy.size();
     }
 
-    final void changeDataSet(@NonNull List<RoomBook> values) {
+    @Override
+    public void changeDataSet(@NonNull List<RealmBook> values) {
         items.clear();
         items.addAll(values);
+        // always contain all source items! to perform search
+        if (stringFilterList == null || stringFilterList.size() <= values.size()) {
+            stringFilterList = getStringList(values);
+        }
+        // if there is change item function it will have to be changed
+        if (itemsCopy == null || itemsCopy.size() <= values.size()) {
+            itemsCopy = values;
+        }
+
         notifyDataSetChanged();
     }
 
-    private RoomBook getItem(int pos) {
-        return items.get(pos);
+    // filtering
+    @Override
+    public Filter getFilter() {
+
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    itemsCopy = items;
+                } else {
+                    List<RealmBook> filteredList = new ArrayList<>();
+                    for (int i = 0; i < stringFilterList.size(); i++) {
+                        if (stringFilterList.get(i).contains(charString)) {
+                            filteredList.add(items.get(i));
+                        }
+                    }
+                    itemsCopy = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = itemsCopy;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                itemsCopy = (List<RealmBook>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
-    void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(@NonNull Book item);
+    private List<String> getStringList(List<RealmBook> values) {
+        List<String> stringList = new ArrayList<>();
+        for (RealmBook realmBook : values) {
+            stringList.add(realmBook.getTitle());
+        }
+        return stringList;
     }
 }

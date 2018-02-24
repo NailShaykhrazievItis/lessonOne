@@ -10,6 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--Books-->
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +20,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DetailsActivity"
+            android:name=".ui.main.details.MainDetailsActivity"
             android:parentActivityName=".ui.main.MainActivity"/>
         <activity
-            android:name=".ui.AddNewActivity"
+            android:name=".ui.main.addnew.BookAddNewActivity"
             android:parentActivityName=".ui.main.MainActivity"/>
+
+        <!--Authors-->
+        <activity
+            android:name=".ui.author.AuthorActivity" />
+        <activity
+            android:name=".ui.author.addnew.AuthorAddNewActivity"
+            android:parentActivityName=".ui.author.AuthorActivity"/>
+        <activity
+            android:name=".ui.author.details.AuthorDetailsActivity"
+            android:parentActivityName=".ui.author.AuthorActivity"/>
+
+        <!--Libraries-->
+        <activity
+            android:name=".ui.library.LibraryActivity" />
+        <activity
+            android:name=".ui.library.addnew.LibraryAddNewActivity"
+            android:parentActivityName=".ui.library.LibraryActivity"/>
+        <activity
+            android:name=".ui.library.details.LibraryDetailsActivity"
+            android:parentActivityName=".ui.library.LibraryActivity"/>
     </application>
 
 </manifest>

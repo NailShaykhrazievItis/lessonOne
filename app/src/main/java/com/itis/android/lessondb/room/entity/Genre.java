@@ -1,22 +1,41 @@
 package com.itis.android.lessondb.room.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 
 public enum Genre {
-    NUN(0),
-    COMEDY(1),
-    DRAMA(2),
-    FANTASY(3);
+    FANTASY("fantasy"),
+    COMEDY("comedy"),
+    DRAMA("drama"),
+    NUN("undefined");
 
-    private int code;
+    private String genreString;
 
-    Genre(int code) {
-        this.code = code;
+    Genre(String genreString) {
+        this.genreString = genreString;
     }
 
-    public int getCode() {
-        return code;
+    public static List<String> getValuesAsArray() {
+        List<String> valuesString = new ArrayList<>();
+        for(Genre genre: values()) {
+            valuesString.add(genre.getGenreString());
+        }
+        return valuesString;
+    }
+
+    public static Genre getGenreByString(String genreString) {
+        for (Genre genre: values()) {
+            if (genre.genreString.equals(genreString))
+                return genre;
+        }
+        return null;
+    }
+
+    public String getGenreString() {
+        return genreString;
     }
 }

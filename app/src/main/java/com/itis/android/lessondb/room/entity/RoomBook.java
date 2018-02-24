@@ -11,17 +11,25 @@ import com.itis.android.lessondb.general.Book;
 import java.util.Date;
 
 import static android.arch.persistence.room.ForeignKey.CASCADE;
+import static android.arch.persistence.room.ForeignKey.SET_NULL;
 
 /**
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 @Entity(tableName = "book",
         indices = {@Index(value = {"id"}, unique = true)},
-        foreignKeys = @ForeignKey(
-                entity = RoomAuthor.class,
-                parentColumns = "id",
-                childColumns = "author_id",
-                onDelete = CASCADE))
+        foreignKeys = {
+                @ForeignKey(
+                        entity = RoomAuthor.class,
+                        parentColumns = "id",
+                        childColumns = "author_id",
+                        onDelete = CASCADE),
+                @ForeignKey(
+                        entity = RoomLibrary.class,
+                        parentColumns = "id",
+                        childColumns = "library_id",
+                        onDelete = SET_NULL
+                )} )
 public class RoomBook implements Book{
 
     @PrimaryKey(autoGenerate = true)
@@ -38,6 +46,9 @@ public class RoomBook implements Book{
 
     @ColumnInfo(name = "author_id")
     private long authorId;
+
+    @ColumnInfo(name = "library_id")
+    private long libraryId;
 
     @Override
     public long getId() {
@@ -86,5 +97,13 @@ public class RoomBook implements Book{
 
     public void setAuthorId(long authorId) {
         this.authorId = authorId;
+    }
+
+    public long getLibraryId() {
+        return libraryId;
+    }
+
+    public void setLibraryId(long libraryId) {
+        this.libraryId = libraryId;
     }
 }
