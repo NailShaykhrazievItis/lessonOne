@@ -36,4 +36,7 @@ public interface BookDao {
 
     @Query("DELETE FROM book")
     void clearBookTable();
+
+    @Query("SELECT * FROM book WHERE genre = :genre")
+    List<RoomBook> getBooksByGenre(Genre genre);
 }

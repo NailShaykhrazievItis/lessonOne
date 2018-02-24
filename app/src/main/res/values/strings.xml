@@ -5,8 +5,21 @@
     <string name="add">add</string>
     <string name="realmAuthor">Author</string>
     <string name="name">Name</string>
-    <string name="field_one">Field one</string>
-    <string name="field_two">Field two</string>
-    <string name="field_three">Field three</string>
+    <string name="genre">Genre</string>
+    <string name="release_date">Release Date</string>
+    <string name="desc">Description</string>
     <string name="add_book">Add roomBook to db</string>
+    <string name="set_release_date">Set Release Date</string>
+    <string name="filter">Filter</string>
+    <string name="navigation_drawer_open">open</string>
+    <string name="navigation_drawer_close">close</string>
+    <string name="borrower">Borrower</string>
+    <string name="main">Main</string>
+
+    <array name="genres">
+        <item>NUN</item>
+        <item>FANTASY</item>
+        <item>COMEDY</item>
+        <item>DRAMA</item>
+    </array>
 </resources>

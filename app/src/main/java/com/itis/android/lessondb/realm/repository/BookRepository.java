@@ -1,5 +1,6 @@
 package com.itis.android.lessondb.realm.repository;
 
+import com.itis.android.lessondb.realm.entity.Genre;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface BookRepository {
     RealmBook getBookById(long id);
 
     void clearDB();
+
+    Observable<List<RealmBook>> getBooksByGenre(Genre genre);
 }

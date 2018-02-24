@@ -19,10 +19,11 @@
         </activity>
         <activity
             android:name=".ui.DetailsActivity"
-            android:parentActivityName=".ui.main.MainActivity"/>
+            android:parentActivityName=".ui.main.MainActivity" />
         <activity
             android:name=".ui.AddNewActivity"
-            android:parentActivityName=".ui.main.MainActivity"/>
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.borrower.BorrowerActivity" />
     </application>
 
 </manifest>
