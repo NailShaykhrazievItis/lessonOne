@@ -8,14 +8,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_borrower"
-        android:title="@string/borrower"
+        android:id="@+id/action_main"
+        android:title="@string/main"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_filter"
-        android:title="@string/filter"
-        app:showAsAction="always"
-        app:actionViewClass="android.widget.Spinner">
-    </item>
 </menu>

@@ -11,16 +11,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
 import com.itis.android.lessondb.realm.RepositryProvider;
+import com.itis.android.lessondb.realm.entity.Genre;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
 import com.itis.android.lessondb.ui.AddNewActivity;
 import com.itis.android.lessondb.ui.DetailsActivity;
+import com.itis.android.lessondb.ui.borrower.BorrowerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +60,37 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        MenuItem item = menu.findItem(R.id.action_filter);
+
+        Spinner filterSpinner = (Spinner) item.getActionView();
+
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String genreString = parent.getItemAtPosition(position).toString();
+                if (!"NUN".equals(genreString)) {
+                    if (isRoom) {
+                        com.itis.android.lessondb.room.entity.Genre roomGenre = com.itis.android.lessondb.room.entity.Genre.valueOf(genreString);
+                        roomGetByGenre(roomGenre);
+                    } else {
+                        Genre realmGenre = Genre.valueOf(genreString);
+                        realmGetByGenre(realmGenre);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+
+        filterSpinner.setAdapter(adapter);
+
         return true;
     }
 
@@ -69,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 }
                 adapter.changeDataSet(new ArrayList<>());
                 return true;
+
+            case R.id.action_borrower: {
+                Intent intent = new Intent(this, BorrowerActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -108,6 +151,24 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::changeData, this::handleError);
+    }
+
+    private void realmGetByGenre(Genre genre) {
+        RepositryProvider.provideBookRepository()
+                .getBooksByGenre(genre)
+                .doOnSubscribe(this::showLoading)
+                .doOnTerminate(this::hideLoading)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::changeData, this::handleError);
+    }
+
+    private void roomGetByGenre(com.itis.android.lessondb.room.entity.Genre genre) {
+        List<RoomBook> books = AppDatabase.getAppDatabase()
+                .getBookDao()
+                .getBooksByGenre(genre);
+                roomChangeData(books);
+                //Throws exception for some reason with Rx
     }
 
     private void roomGetAll() {

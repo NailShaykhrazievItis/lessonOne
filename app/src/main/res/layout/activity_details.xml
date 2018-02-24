@@ -59,11 +59,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_one"
+            android:text="@string/genre"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_one"
+            android:id="@+id/tv_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -81,11 +81,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_two"
+            android:text="@string/release_date"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_two"
+            android:id="@+id/tv_releaseDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
@@ -103,11 +103,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_three"
+            android:text="@string/desc"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_three"
+            android:id="@+id/tv_Desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"

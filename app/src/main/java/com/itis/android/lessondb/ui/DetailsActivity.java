@@ -11,13 +11,15 @@ import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomAuthor;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
+import java.text.SimpleDateFormat;
+
 public class DetailsActivity extends AppCompatActivity {
 
     private TextView tvName;
     private TextView tvAuthor;
-    private TextView tvFieldOne;
-    private TextView tvFieldTwo;
-    private TextView tvFieldThree;
+    private TextView tvDesc;
+    private TextView tvReleaseDate;
+    private TextView tvGenre;
 
     private boolean isRoom = true;
 
@@ -43,15 +45,18 @@ public class DetailsActivity extends AppCompatActivity {
     private void initFields() {
         tvName = findViewById(R.id.tv_name);
         tvAuthor = findViewById(R.id.tv_author);
-        tvFieldOne = findViewById(R.id.tv_field_one);
-        tvFieldTwo = findViewById(R.id.tv_field_two);
-        tvFieldThree = findViewById(R.id.tv_field_three);
+        tvDesc = findViewById(R.id.tv_Desc);
+        tvGenre = findViewById(R.id.tv_genre);
+        tvReleaseDate = findViewById(R.id.tv_releaseDate);
     }
 
     private void realmFlow(long id) {
         RealmBook book = RepositryProvider.provideBookRepository().getBookById(id);
         tvName.setText(book.getTitle());
         tvAuthor.setText(book.getRealmAuthor().getName());
+        tvDesc.setText(book.getDesc());
+        tvReleaseDate.setText(new SimpleDateFormat("dd.MM.YYYY").format(book.getReleaseDate()));
+        tvGenre.setText(book.getGenre().getEnum().name());
     }
 
     private void roomFlow(long id) {
@@ -59,5 +64,8 @@ public class DetailsActivity extends AppCompatActivity {
         RoomAuthor author = AppDatabase.getAppDatabase().getAuthorDao().getAuthorById(book.getAuthorId());
         tvName.setText(book.getTitle());
         tvAuthor.setText(author.getName());
+        tvDesc.setText(book.getDesc());
+        tvReleaseDate.setText(new SimpleDateFormat("dd.MM.YYYY").format(book.getReleaseDate()));
+        tvGenre.setText(book.getGenre().name());
     }
 }

@@ -1,5 +1,6 @@
 package com.itis.android.lessondb.realm.repository.impl;
 
+import com.itis.android.lessondb.realm.entity.Genre;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.realm.repository.BookRepository;
 import com.itis.android.lessondb.realm.repository.base.BaseRepository;
@@ -36,5 +37,10 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     @Override
     public void clearDB() {
         super.clearDB();
+    }
+
+    @Override
+    public Observable<List<RealmBook>> getBooksByGenre(Genre genre) {
+        return Observable.just(getRealm().where(RealmBook.class).equalTo("genre", genre.toString()).findAll());
     }
 }
