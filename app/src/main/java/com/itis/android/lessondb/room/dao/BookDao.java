@@ -25,6 +25,13 @@ public interface BookDao {
     @Query("SELECT * FROM book where id = :bookId LIMIT 1")
     RoomBook getBookById(long bookId);
 
+    @Query("SELECT * FROM book where title = :name AND genre =:genre " +
+            "AND EXISTS(SELECT * FROM author WHERE author.id = author_id AND author.name =:authorName)")
+    List<RoomBook> isRoomBookExist(String name, String authorName, String genre);
+
+    @Query("SELECT * FROM book where releaseDate < :year")
+    List<RoomBook> findBooksBeforeYear(long year); //filter action
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertBook(RoomBook roomBook);
 

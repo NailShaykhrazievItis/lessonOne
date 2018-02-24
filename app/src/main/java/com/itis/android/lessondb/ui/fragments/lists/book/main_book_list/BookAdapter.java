@@ -1,4 +1,4 @@
-package com.itis.android.lessondb.ui.main;
+package com.itis.android.lessondb.ui.fragments.lists.book.main_book_list;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Nail Shaykhraziev on 11.02.2018.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookItemHolder> {
 
     // need change RoomBook to RealmBook for work with Realm on this class
     private List<RoomBook> items = new ArrayList<>();
@@ -32,18 +32,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         }
     };
 
-    MainAdapter(List<RoomBook> items) {
+    BookAdapter(List<RoomBook> items) {
         this.items.addAll(items);
     }
 
     @Override
-    public MainItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainItemHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_main, parent, false));
+    public BookItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new BookItemHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_book, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MainItemHolder holder, int position) {
+    public void onBindViewHolder(BookItemHolder holder, int position) {
         RoomBook book = getItem(position);
         holder.bind(book);
         holder.itemView.setTag(position);

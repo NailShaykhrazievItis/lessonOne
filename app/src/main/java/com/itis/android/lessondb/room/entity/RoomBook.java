@@ -16,13 +16,13 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
  * Created by Nail Shaykhraziev on 12.02.2018.
  */
 @Entity(tableName = "book",
-        indices = {@Index(value = {"id"}, unique = true)},
+        indices = {@Index(value = {"id"}, unique = true),@Index(value = {"author_id"})},
         foreignKeys = @ForeignKey(
                 entity = RoomAuthor.class,
                 parentColumns = "id",
                 childColumns = "author_id",
                 onDelete = CASCADE))
-public class RoomBook implements Book{
+public class RoomBook implements Book {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -78,6 +78,10 @@ public class RoomBook implements Book{
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public void setGenre(String genreStr) {
+        this.genre = Genre.valueOf(genreStr.toUpperCase());
     }
 
     public long getAuthorId() {

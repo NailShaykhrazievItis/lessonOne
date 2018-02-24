@@ -37,4 +37,26 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     public void clearDB() {
         super.clearDB();
     }
+
+    @Override
+    public List<RealmBook> isRoomBookExist(String name, String authorName, String genre) {
+        List<RealmBook> books = getRealm()
+                                .where(RealmBook.class)
+                                .equalTo("title",name)
+                                .equalTo("genre",genre)
+                                .equalTo("realmAuthor.name",authorName)
+                                .findAll();
+
+        return books;
+    }
+
+    @Override
+    public List<RealmBook> findBooksBeforeYear(long year) {
+        List<RealmBook> books = getRealm()
+                                .where(RealmBook.class)
+                                .lessThan("releaseDate",year)
+                                .findAll();
+
+        return books;
+    }
 }

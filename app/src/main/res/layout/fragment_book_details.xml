@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.itis.android.lessondb.ui.DetailsActivity">
+    tools:context=".ui.fragments.lists.book.BookDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_one"
+            android:text="@string/genre"
             android:textColor="@color/secondary_text" />
 
         <TextView
@@ -81,7 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_two"
+            android:text="@string/release_date"
             android:textColor="@color/secondary_text" />
 
         <TextView
@@ -103,7 +103,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_three"
+            android:text="@string/desc"
             android:textColor="@color/secondary_text" />
 
         <TextView
@@ -114,5 +114,36 @@
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16"
             tools:text="The Lord of the Rings" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin.large">
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_have_book"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorAccent"
+            android:text="@string/have_this_book"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text.16"
+            android:textColor="@color/white"/>
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_get_book"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_marginLeft="8dp"
+            android:background="@color/colorAccent"
+            android:text="@string/get_this_book"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text.16"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>
