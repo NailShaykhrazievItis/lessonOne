@@ -19,4 +19,6 @@ public interface BookRepository {
     RealmBook getBookById(long id);
 
     void clearDB();
+
+    Observable<List<RealmBook>> getBooksByAuthor(String author);
 }

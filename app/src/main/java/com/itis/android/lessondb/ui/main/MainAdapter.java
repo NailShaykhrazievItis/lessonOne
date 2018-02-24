@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.realm.entity.RealmAuthor;
+import com.itis.android.lessondb.realm.entity.RealmBook;
+import com.itis.android.lessondb.realm.entity.RealmGenre;
+import com.itis.android.lessondb.room.entity.RoomAuthor;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.ArrayList;

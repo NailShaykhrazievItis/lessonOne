@@ -11,13 +11,17 @@ import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomAuthor;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 public class DetailsActivity extends AppCompatActivity {
 
     private TextView tvName;
     private TextView tvAuthor;
-    private TextView tvFieldOne;
-    private TextView tvFieldTwo;
-    private TextView tvFieldThree;
+    private TextView tvDescription;
+    private TextView tvRelDate;
+    private TextView tvGenre;
 
     private boolean isRoom = true;
 
@@ -43,15 +47,24 @@ public class DetailsActivity extends AppCompatActivity {
     private void initFields() {
         tvName = findViewById(R.id.tv_name);
         tvAuthor = findViewById(R.id.tv_author);
-        tvFieldOne = findViewById(R.id.tv_field_one);
-        tvFieldTwo = findViewById(R.id.tv_field_two);
-        tvFieldThree = findViewById(R.id.tv_field_three);
+        tvDescription = findViewById(R.id.tv_description);
+        tvRelDate = findViewById(R.id.tv_reldate);
+        tvGenre = findViewById(R.id.tv_genre);
     }
 
     private void realmFlow(long id) {
         RealmBook book = RepositryProvider.provideBookRepository().getBookById(id);
         tvName.setText(book.getTitle());
         tvAuthor.setText(book.getRealmAuthor().getName());
+        tvDescription.setText(book.getDesc());
+
+        Calendar relDate = new GregorianCalendar();
+        relDate.setTime(book.getReleaseDate());
+        String date = relDate.get(Calendar.DAY_OF_MONTH) + "."
+                + (relDate.get(Calendar.MONTH) + 1) + "."
+                + relDate.get(Calendar.YEAR);
+        tvRelDate.setText(date);
+        tvGenre.setText(book.getGenre().getEnum().name());
     }
 
     private void roomFlow(long id) {
@@ -59,5 +72,14 @@ public class DetailsActivity extends AppCompatActivity {
         RoomAuthor author = AppDatabase.getAppDatabase().getAuthorDao().getAuthorById(book.getAuthorId());
         tvName.setText(book.getTitle());
         tvAuthor.setText(author.getName());
+        tvDescription.setText(book.getDesc());
+
+        Calendar relDate = new GregorianCalendar();
+        relDate.setTime(book.getReleaseDate());
+        String date = relDate.get(Calendar.DAY_OF_MONTH) + "."
+                + (relDate.get(Calendar.MONTH) + 1) + "."
+                + relDate.get(Calendar.YEAR);
+        tvRelDate.setText(date);
+        tvGenre.setText(book.getGenre().name());
     }
 }

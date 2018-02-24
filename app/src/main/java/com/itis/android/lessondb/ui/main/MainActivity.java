@@ -19,8 +19,10 @@ import com.itis.android.lessondb.realm.RepositryProvider;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
-import com.itis.android.lessondb.ui.AddNewActivity;
+import com.itis.android.lessondb.ui.ReaderAddActivity;
+import com.itis.android.lessondb.ui.add_new.AddNewActivity;
 import com.itis.android.lessondb.ui.DetailsActivity;
+import com.itis.android.lessondb.ui.reader_list.ReaderListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,20 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                     clearRealmDB();
                 }
                 adapter.changeDataSet(new ArrayList<>());
+                return true;
+            case R.id.action_filter:
+                //TODO filter
+                if (isRoom) {
+                    adapter.changeDataSet(roomGetByAuthorName("Tolstoy"));
+                } else {
+                   // adapter.changeDataSet(realmGetByAuthor("Tolstoy"));
+                }
+                return true;
+            case R.id.action_add_reader:
+                startActivity(new Intent(this, ReaderAddActivity.class));
+                return true;
+            case R.id.action_list_readers:
+                startActivity(new Intent(this, ReaderListActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -119,6 +135,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::roomChangeData, this::handleError);
+    }
+
+    private List<RealmBook> realmGetByAuthor(String author){
+        return RepositryProvider.provideBookRepository()
+                .getBooksByAuthor(author).blockingFirst();
+    }
+
+    private List<RoomBook> roomGetByAuthorName(String author) {
+        return AppDatabase.getAppDatabase()
+                .getBookDao()
+                .getBooksByAuthorName(author);
     }
 
     private void initViews() {
