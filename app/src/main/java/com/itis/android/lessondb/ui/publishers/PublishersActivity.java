@@ -1,4 +1,4 @@
-package com.itis.android.lessondb.ui.main;
+package com.itis.android.lessondb.ui.publishers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,34 +16,32 @@ import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.App;
 import com.itis.android.lessondb.R;
-import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.general.Publisher;
 import com.itis.android.lessondb.realm.RepositryProvider;
-import com.itis.android.lessondb.realm.entity.RealmBook;
+import com.itis.android.lessondb.realm.entity.RealmPublisher;
 import com.itis.android.lessondb.room.AppDatabase;
-import com.itis.android.lessondb.room.entity.RoomBook;
+import com.itis.android.lessondb.room.entity.RoomPublisher;
 import com.itis.android.lessondb.ui.AddNewActivity;
-import com.itis.android.lessondb.ui.DetailsActivity;
 import com.itis.android.lessondb.ui.authors.AuthorsActivity;
-import com.itis.android.lessondb.ui.publishers.PublishersActivity;
+import com.itis.android.lessondb.ui.main.MainActivity;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClickListener {
+public class PublishersActivity extends AppCompatActivity implements PublishersAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
     private ProgressBar progressBar;
 
-    private MainAdapter adapter;
+    private PublishersAdapter adapter;
 
     public static Intent makeIntent(Context context) {
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, PublishersActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         return intent;
@@ -62,13 +60,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         initViews();
         initRecycler();
         getAllFromDb();
-        getSupportActionBar().setTitle(R.string.books);
+        getSupportActionBar().setTitle(R.string.publishers);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        menu.findItem(R.id.action_filter).setVisible(true);
+        menu.findItem(R.id.action_filter).setVisible(false);
         return true;
     }
 
@@ -83,16 +81,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 }
                 adapter.changeDataSet(new ArrayList<>());
                 return true;
-            case R.id.action_filter:
-                item.setChecked(!item.isChecked());
-                if (item.isChecked()) {
-                    item.setIcon(R.drawable.ic_filter_list_white_24dp);
-                    getFilteredFromDb();
-                } else {
-                    item.setIcon(R.drawable.ic_filter_list_black_24dp);
-                    getAllFromDb();
-                }
-                return false;
 
             case R.id.action_books:
                 startActivity(MainActivity.makeIntent(getApplicationContext()));
@@ -120,10 +108,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     @Override
-    public void onItemClick(@NonNull Book item) {
-        Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra("item", item.getId());
-        startActivity(intent);
+    public void onItemClick(@NonNull Publisher item) {
+        //
     }
 
     private void clearRealmDB() {
@@ -145,8 +131,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void realmGetAll() {
-        RepositryProvider.provideBookRepository()
-                .getAllBooks()
+        RepositryProvider.providePublisherRepository()
+                .getAllPublishers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(this::showLoading)
@@ -156,43 +142,13 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     private void roomGetAll() {
         AppDatabase.getAppDatabase()
-                .getBookDao()
-                .getAllBooks()
+                .getPublisherDao()
+                .getAllPublishers()
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(this::showLoading)
                 .doAfterTerminate(this::hideLoading)
                 .subscribe(this::roomChangeData, this::handleError);
-    }
-
-    private void getFilteredFromDb() {
-        if (App.isRoom) {
-            roomGetFiltered();
-        } else {
-            realmGetFiltered();
-        }
-    }
-
-    private void realmGetFiltered() {
-        RepositryProvider.provideBookRepository()
-                .getFilteredBooks(new GregorianCalendar(2015, 0, 0).getTime())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(this::showLoading)
-                .doOnTerminate(this::hideLoading)
-                .subscribe(this::changeData, this::handleError);
-    }
-
-    private void roomGetFiltered() {
-        AppDatabase.getAppDatabase()
-                .getBookDao()
-                .getFilteredBooks(new GregorianCalendar(2015, 0, 0).getTime())
-                .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(this::showLoading)
-                .doAfterTerminate(this::hideLoading)
-                .subscribe(this::roomChangeData, this::handleError);
-
     }
 
     private void initViews() {
@@ -202,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void initRecycler() {
-        adapter = new MainAdapter(new ArrayList<>());
+        adapter = new PublishersAdapter(new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.onAttachedToRecyclerView(recyclerView);
         adapter.setOnItemClickListener(this);
@@ -221,12 +177,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
 
-    private void changeData(@NonNull List<RealmBook> books) {
-        adapter.changeDataSet((List<Book>) (List<?>) books);
+    private void changeData(@NonNull List<RealmPublisher> publishers) {
+        adapter.changeDataSet((List<Publisher>) (List<?>) publishers);
     }
 
-    private void roomChangeData(@NonNull List<RoomBook> books) {
-        adapter.changeDataSet((List<Book>) (List<?>) books);
+    private void roomChangeData(@NonNull List<RoomPublisher> publishers) {
+        adapter.changeDataSet((List<Publisher>) (List<?>) publishers);
     }
 
     private void handleError(Throwable throwable) {
@@ -241,23 +197,4 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         progressBar.setVisibility(View.GONE);
     }
 
-    @NonNull
-    @Deprecated
-    private List<String> generateNames() {
-        List<String> names = new ArrayList<>();
-        names.add("War and Piece");
-        names.add("The Lord of the Rings");
-        names.add("The song of ice and fire");
-        names.add("Hobbit");
-        names.add("The Divine Comedy");
-        names.add("Hamlet");
-        names.add("Alice's Adventures in Wonderland");
-        names.add("Gulliver's Travels");
-        names.add("Harry Potter");
-        names.add("The Count Of Monte Cristo");
-        names.add("Do Androids Dream of Electric Sheep?");
-        names.add("Witcher");
-        names.add("Romeo and Juliet");
-        return names;
-    }
 }

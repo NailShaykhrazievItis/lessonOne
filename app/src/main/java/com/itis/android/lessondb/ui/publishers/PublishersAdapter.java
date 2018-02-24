@@ -1,4 +1,4 @@
-package com.itis.android.lessondb.ui.main;
+package com.itis.android.lessondb.ui.publishers;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,42 +8,42 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
-import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.general.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Nail Shaykhraziev on 11.02.2018.
+ * Created by a9 on 23.02.18.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
+public class PublishersAdapter extends RecyclerView.Adapter<PublishersViewHolder> {
 
-    private List<Book> items = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
+    private List<Publisher> items = new ArrayList<>();
+    private PublishersAdapter.OnItemClickListener onItemClickListener;
 
     private final View.OnClickListener internalListener = (view) -> {
         if (onItemClickListener != null) {
             int position = (int) view.getTag();
-            Book item = getItem(position);
+            Publisher item = getItem(position);
             onItemClickListener.onItemClick(item);
         }
     };
 
-    MainAdapter(List<Book> items) {
+    PublishersAdapter(List<Publisher> items) {
         this.items.addAll(items);
     }
 
     @Override
-    public MainItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new MainItemHolder(LayoutInflater.from(parent.getContext())
+    public PublishersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new PublishersViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_main, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(MainItemHolder holder, int position) {
-        Book book = getItem(position);
-        holder.bind(book);
+    public void onBindViewHolder(PublishersViewHolder holder, int position) {
+        Publisher publisher = getItem(position);
+        holder.bind(publisher);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(internalListener);
     }
@@ -53,21 +53,22 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         return items.size();
     }
 
-    final void changeDataSet(@NonNull List<Book> values) {
+    final void changeDataSet(@NonNull List<Publisher> values) {
         items.clear();
         items.addAll(values);
         notifyDataSetChanged();
     }
 
-    private Book getItem(int pos) {
+    private Publisher getItem(int pos) {
         return items.get(pos);
     }
 
-    void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {
+    void setOnItemClickListener(@Nullable PublishersAdapter.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(@NonNull Book item);
+        void onItemClick(@NonNull Publisher item);
     }
+
 }

@@ -4,22 +4,21 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.itis.android.lessondb.general.Author;
-
-import java.util.Date;
+import com.itis.android.lessondb.general.Publisher;
 
 /**
- * Created by Nail Shaykhraziev on 12.02.2018.
+ * Created by a9 on 20.02.18.
  */
-@Entity(tableName = "author", indices = {@Index(value = {"id"}, unique = true)})
-public class RoomAuthor implements Author {
+
+@Entity(tableName = "publisher", indices = {@Index(value = {"id"}, unique = true)})
+public class RoomPublisher implements Publisher {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
 
     private String name;
 
-    private Date birthday;
+    private String address;
 
     public long getId() {
         return id;
@@ -37,20 +36,21 @@ public class RoomAuthor implements Author {
         this.name = name;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setAddress(String address) {
+        this.address = address;
     }
+
 
     @Override
     public String toString() {
-        return "RoomAuthor{" +
+        return "RoomPublisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", birthday=" + birthday +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

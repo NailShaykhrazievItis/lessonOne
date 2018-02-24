@@ -1,7 +1,6 @@
 package com.itis.android.lessondb.realm.entity;
 
 
-
 import com.itis.android.lessondb.general.Book;
 
 import java.util.Date;
@@ -22,7 +21,9 @@ public class RealmBook extends RealmObject implements Book {
     private String desc;
     private Date releaseDate;
     private RealmAuthor realmAuthor;
-    private RealmGenre genre;
+    private RealmPublisher realmPublisher;
+
+    private String genreRealm;
 
     @Override
     public long getId() {
@@ -66,11 +67,34 @@ public class RealmBook extends RealmObject implements Book {
         this.realmAuthor = realmAuthor;
     }
 
-    public RealmGenre getGenre() {
-        return genre;
+    public RealmPublisher getRealmPublisher() {
+        return realmPublisher;
     }
 
-    public void setGenre(RealmGenre genre) {
-        this.genre = genre;
+    public void setRealmPublisher(RealmPublisher realmPublisher) {
+        this.realmPublisher = realmPublisher;
+    }
+
+
+    public GenreRealm getGenreRealm() {
+        return (genreRealm != null) ? GenreRealm.valueOf(genreRealm) : null;
+    }
+
+    public void setGenreRealm(GenreRealm genreRealm) {
+        this.genreRealm = genreRealm.toString();
+    }
+
+
+    @Override
+    public String toString() {
+        return "RealmBook{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", desc='" + desc + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", realmAuthor=" + realmAuthor +
+                ", realmPublisher=" + realmPublisher +
+                ", genreRealm='" + genreRealm + '\'' +
+                '}';
     }
 }

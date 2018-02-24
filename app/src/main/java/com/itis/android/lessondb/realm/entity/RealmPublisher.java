@@ -1,23 +1,22 @@
 package com.itis.android.lessondb.realm.entity;
 
-import com.itis.android.lessondb.general.Author;
-
-import java.util.Date;
+import com.itis.android.lessondb.general.Publisher;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by Nail Shaykhraziev on 12.02.2018.
+ * Created by a9 on 20.02.18.
  */
 
-public class RealmAuthor extends RealmObject implements Author {
+public class RealmPublisher extends RealmObject implements Publisher {
 
     @PrimaryKey
     private long id;
     private String name;
-    private Date birthday;
+    private String address;
+
     private RealmList<RealmBook> bookRealmList;
 
     public long getId() {
@@ -36,12 +35,12 @@ public class RealmAuthor extends RealmObject implements Author {
         this.name = name;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getAddress() {
+        return address;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public RealmList<RealmBook> getBookRealmList() {
@@ -52,13 +51,12 @@ public class RealmAuthor extends RealmObject implements Author {
         this.bookRealmList = bookRealmList;
     }
 
-
     @Override
     public String toString() {
-        return "RealmAuthor{" +
+        return "RealmPublisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", birthday=" + birthday +
+                ", address='" + address + '\'' +
                 ", bookRealmList=" + bookRealmList +
                 '}';
     }
