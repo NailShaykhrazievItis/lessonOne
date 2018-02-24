@@ -43,6 +43,4 @@ public class RealmReader extends RealmObject {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

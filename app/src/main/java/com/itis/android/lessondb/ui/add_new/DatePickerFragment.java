@@ -36,5 +36,4 @@ public class DatePickerFragment extends DialogFragment {
                     getActivity().getIntent().putExtra(DATE_TAG, date);
                 }
             };
-
 }

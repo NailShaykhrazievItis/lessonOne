@@ -28,5 +28,4 @@ public class ReaderItemHolder extends RecyclerView.ViewHolder {
         name.setText(reader.getName());
         age.setText(String.valueOf(reader.getAge()));
     }
-
 }

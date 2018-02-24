@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
             case R.id.action_filter:
                 //TODO filter
                 if (isRoom) {
-                    adapter.changeDataSet(roomGetByAuthor("Tolstoy"));
+                    adapter.changeDataSet(roomGetByAuthorName("Tolstoy"));
                 } else {
                    // adapter.changeDataSet(realmGetByAuthor("Tolstoy"));
                 }
@@ -142,10 +142,10 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 .getBooksByAuthor(author).blockingFirst();
     }
 
-    private List<RoomBook> roomGetByAuthor(String author) {
+    private List<RoomBook> roomGetByAuthorName(String author) {
         return AppDatabase.getAppDatabase()
                 .getBookDao()
-                .getBooksByAuthor(author);
+                .getBooksByAuthorName(author);
     }
 
     private void initViews() {

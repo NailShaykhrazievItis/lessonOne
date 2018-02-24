@@ -18,7 +18,7 @@ public interface AuthorDao {
     RoomAuthor getAuthorById(long authorId);
 
     @Query("SELECT id FROM author WHERE name = :name")
-    long getAuthorByName(String name);
+    long getAuthorIdByName(String name);
 
     @Insert
     long insertAuthor(RoomAuthor author); //room can return id of entity

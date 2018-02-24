@@ -11,5 +11,4 @@ public interface ReaderRepository {
     List<RealmReader> getAllReaders();
 
     void insertReader(RealmReader reader);
-
 }

@@ -70,7 +70,6 @@ public class ReaderAddActivity extends AppCompatActivity {
         ArrayAdapter<?> spinAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bookNames);
         spinAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinBook.setAdapter(spinAdapter);
-
     }
 
     @Override
@@ -111,12 +110,14 @@ public class ReaderAddActivity extends AppCompatActivity {
 
     private List<RealmBook> realmGetAll() {
         return RepositryProvider.provideBookRepository()
-                .getAllBooks().blockingFirst();
+                .getAllBooks()
+                .blockingFirst();
     }
 
     private List<RoomBook> roomGetAll() {
         return AppDatabase.getAppDatabase()
                 .getBookDao()
-                .getAllBooks().blockingGet();
+                .getAllBooks()
+                .blockingGet();
     }
 }
