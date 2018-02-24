@@ -14,12 +14,10 @@ import com.itis.android.lessondb.general.Author;
 public class AuthorsViewHolder extends RecyclerView.ViewHolder {
 
     private TextView name;
-    //private TextView author;
 
     AuthorsViewHolder(View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.item_name);
-        //author = itemView.findViewById(R.id.item_author);
     }
 
     public void bind(Author author) {

@@ -13,12 +13,10 @@ import com.itis.android.lessondb.general.Publisher;
 
 public class PublishersViewHolder extends RecyclerView.ViewHolder {
     private TextView name;
-    //private TextView author;
 
     PublishersViewHolder(View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.item_name);
-        //author = itemView.findViewById(R.id.item_author);
     }
 
     public void bind(Publisher publisher) {
