@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.itis.android.lessondb.ui.main.fragments.lists.book_lists.BookDetailsFragment">
+    tools:context=".ui.fragments.lists.book.BookDetailsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.fragments.lists.book_lists.main_book_list.BookListFragment">
+    tools:context=".ui.fragments.lists.book.main_book_list.BookListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_vid"

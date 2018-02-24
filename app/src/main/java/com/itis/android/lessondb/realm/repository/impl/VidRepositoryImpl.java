@@ -7,7 +7,6 @@ import com.itis.android.lessondb.realm.repository.BookRepository;
 import com.itis.android.lessondb.realm.repository.ReaderRepository;
 import com.itis.android.lessondb.realm.repository.VidRepository;
 import com.itis.android.lessondb.realm.repository.base.BaseRepository;
-import com.itis.android.lessondb.ui.utils.ViewHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -25,25 +24,20 @@ public class VidRepositoryImpl extends BaseRepository implements VidRepository {
     }
 
     @Override
-    public void insertVid(RealmVid vid) {
-        try {
-            ReaderRepository readerRepository = new ReaderRepositoryImpl();
-            BookRepository bookRepository = new BookRepositoryImpl();
-            RealmReader lender = readerRepository.getReaderById(vid.getLender().getId());
-            RealmReader debtor = readerRepository.getReaderById(vid.getDebtor().getId());
-            RealmBook book = bookRepository.getBookById(vid.getBook().getId());
-            if(lender != null && debtor != null && book != null){
-                throw new IllegalArgumentException("Нельзя получить книгу, так как она уже была выдана");
-            }
-            executeTransaction(realm -> {
-                long id = nextKey(realm, RealmReader.class);
-                vid.setId(id);
-                realm.insertOrUpdate(vid);
-            });
-
-        }catch (IllegalArgumentException ex){
-            ViewHelper.showToast(ex.getMessage());
+    public void insertVid(RealmVid vid) throws IllegalArgumentException {
+        ReaderRepository readerRepository = new ReaderRepositoryImpl();
+        BookRepository bookRepository = new BookRepositoryImpl();
+        RealmReader lender = readerRepository.getReaderById(vid.getLender().getId());
+        RealmReader debtor = readerRepository.getReaderById(vid.getDebtor().getId());
+        RealmBook book = bookRepository.getBookById(vid.getBook().getId());
+        if (lender != null && debtor != null && book != null) {
+            throw new IllegalArgumentException("Нельзя получить книгу, так как она уже была выдана");
         }
+        executeTransaction(realm -> {
+            long id = nextKey(realm, RealmReader.class);
+            vid.setId(id);
+            realm.insertOrUpdate(vid);
+        });
     }
 
     @Override
