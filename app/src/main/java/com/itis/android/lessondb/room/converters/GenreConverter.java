@@ -11,22 +11,12 @@ import com.itis.android.lessondb.room.entity.Genre;
 public class GenreConverter {
 
     @TypeConverter
-    public int toInt(Genre genre) {
-        return genre.getCode();
+    public String toString(Genre genre) {
+        return genre.getGenreString();
     }
 
     @TypeConverter
-    public Genre toEnum(int code) {
-        if (code == Genre.NUN.getCode()) {
-            return Genre.NUN;
-        } else if (code == Genre.COMEDY.getCode()) {
-            return Genre.COMEDY;
-        } else if (code == Genre.DRAMA.getCode()) {
-            return Genre.DRAMA;
-        } else if (code == Genre.FANTASY.getCode()) {
-            return Genre.FANTASY;
-        } else {
-            throw new IllegalArgumentException("Could not recognize status");
-        }
+    public Genre toEnum(String name) {
+        return Genre.valueOf(name);
     }
 }

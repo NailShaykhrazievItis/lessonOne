@@ -6,4 +6,19 @@
         android:id="@+id/action_clear"
         android:title="@string/action_clear"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_show_authors"
+        android:title="@string/menu_item_show_authors"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_show_books"
+        android:title="@string/menu_item_show_books"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_show_libraries"
+        android:title="@string/menu_item_show_libraries"
+        app:showAsAction="never"/>
 </menu>

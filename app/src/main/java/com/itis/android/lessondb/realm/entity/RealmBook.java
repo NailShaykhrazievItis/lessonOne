@@ -23,6 +23,7 @@ public class RealmBook extends RealmObject implements Book {
     private Date releaseDate;
     private RealmAuthor realmAuthor;
     private RealmGenre genre;
+    private RealmLibrary realmLibrary;
 
     @Override
     public long getId() {
@@ -72,5 +73,18 @@ public class RealmBook extends RealmObject implements Book {
 
     public void setGenre(RealmGenre genre) {
         this.genre = genre;
+    }
+
+    public RealmLibrary getRealmLibrary() {
+        return realmLibrary;
+    }
+
+    public void setRealmLibrary(RealmLibrary realmLibrary) {
+        this.realmLibrary = realmLibrary;
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

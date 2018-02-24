@@ -22,6 +22,12 @@ public interface BookDao {
     @Query("SELECT * FROM book")
     Maybe<List<RoomBook>> getAllBooks();
 
+    @Query("SELECT * FROM book where id = :libraryId")
+    List<RoomBook> getAllBooksByLibraryId(long libraryId);
+
+    @Query("SELECT * FROM book where id = :authorId")
+    List<RoomBook> getAllBooksByAuthorId(long authorId);
+
     @Query("SELECT * FROM book where id = :bookId LIMIT 1")
     RoomBook getBookById(long bookId);
 

@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingEnd="@dimen/margin.large"
+        android:paddingStart="@dimen/margin.large"
+        android:paddingTop="@dimen/margin.large"
+        android:textColor="@color/primary_text"
+        android:textSize="@dimen/text.16"
+        tools:text="The Lord of the Rings" />
+
+    <TextView
+        android:id="@+id/item_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin.large"
+        android:paddingEnd="@dimen/margin.large"
+        android:paddingStart="@dimen/margin.large"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/text.14"
+        tools:text="J.R.R. Tolkien" />
+
+</LinearLayout>

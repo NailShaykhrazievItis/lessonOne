@@ -1,26 +1,25 @@
 package com.itis.android.lessondb.ui.main;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
-import com.itis.android.lessondb.realm.RepositryProvider;
+import com.itis.android.lessondb.realm.RepositoryProvider;
 import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
-import com.itis.android.lessondb.ui.AddNewActivity;
-import com.itis.android.lessondb.ui.DetailsActivity;
+import com.itis.android.lessondb.ui.base.BaseActivity;
+import com.itis.android.lessondb.ui.base.BaseAdapter;
+import com.itis.android.lessondb.ui.main.addnew.BookAddNewActivity;
+import com.itis.android.lessondb.ui.main.details.MainDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,109 +28,91 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClickListener {
+public class MainActivity extends BaseActivity<Book> {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
     private ProgressBar progressBar;
+    private SearchView searchView;
 
-    private MainAdapter adapter;
-
-    private boolean isRoom = true;
+    private BaseAdapter<RealmBook, MainItemHolder> adapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initViews();
-        initRecycler();
+    protected int getContentView() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void clear() {
         if (isRoom) {
-            roomGetAll();
+            clearRoomDB();
         } else {
-            realmGetAll();
+            clearRealmDB();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_clear:
-                if (isRoom) {
-                    clearRoomDB();
-                } else {
-                    clearRealmDB();
-                }
-                adapter.changeDataSet(new ArrayList<>());
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy() {
-        AppDatabase.destroyInstance();
-        super.onDestroy();
-    }
-
-    public void onFabClicked(View vIew) {
-        Intent intent = new Intent(this, AddNewActivity.class);
-        startActivity(intent);
+        adapter.changeDataSet(new ArrayList<>());
     }
 
     @Override
     public void onItemClick(@NonNull Book item) {
-        Intent intent = new Intent(this, DetailsActivity.class);
+        Intent intent = new Intent(this, MainDetailsActivity.class);
         intent.putExtra("item", item.getId());
         startActivity(intent);
     }
 
+    public void onFabClicked(View vIew) {
+        Intent intent = new Intent(this, BookAddNewActivity.class);
+        startActivity(intent);
+    }
+
     private void clearRealmDB() {
-        RepositryProvider.provideBookRepository().clearDB();
+        RepositoryProvider.provideBookRepository().clearDB();
     }
 
     private void clearRoomDB() {
         AppDatabase.getAppDatabase().getBookDao().clearBookTable();
-        AppDatabase.getAppDatabase().getAuthorDao().clearAuthorTable();
     }
 
-    private void realmGetAll() {
-        RepositryProvider.provideBookRepository()
+    @Override
+    protected void realmGetAll() {
+        RepositoryProvider.provideBookRepository()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doOnTerminate(this::hideLoading)
+//                .doOnSubscribe(this::showLoading)
+//                .doOnTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::changeData, this::handleError);
     }
 
-    private void roomGetAll() {
+    @Override
+    protected void initContent() {
+        initRecyclerAndSearch();
+    }
+
+    @Override
+    protected void roomGetAll() {
         AppDatabase.getAppDatabase()
                 .getBookDao()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doAfterTerminate(this::hideLoading)
+//                .doOnSubscribe(this::showLoading)
+//                .doAfterTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::roomChangeData, this::handleError);
     }
 
-    private void initViews() {
+    @Override
+    protected void initViews() {
         recyclerView = findViewById(R.id.rv_main);
         fabAdd = findViewById(R.id.fab_main);
         progressBar = findViewById(R.id.pg_main);
+        searchView = findViewById(R.id.search);
     }
 
-    private void initRecycler() {
+    private void initRecyclerAndSearch() {
         adapter = new MainAdapter(new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.onAttachedToRecyclerView(recyclerView);
-        adapter.setOnItemClickListener(this);
+        adapter.setOnListItemClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -144,14 +125,33 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 }
             }
         });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ((MainAdapter) adapter).getFilter().filter(newText);
+                return false;
+            }
+        });
+        searchView.setActivated(true);
+        searchView.setQueryHint(getResources().getString(R.string.hint_search));
+        searchView.onActionViewExpanded();
+        searchView.setIconified(false);
+        searchView.clearFocus();
     }
 
     private void changeData(@NonNull List<RealmBook> books) {
-//        adapter.changeDataSet(books);
+        adapter.changeDataSet(books);
     }
 
     private void roomChangeData(@NonNull List<RoomBook> books) {
-        adapter.changeDataSet(books);
+        // change generic to use Room
+//        adapter.changeDataSet(books);
     }
 
     private void handleError(Throwable throwable) {
@@ -164,25 +164,5 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     private void hideLoading() {
         progressBar.setVisibility(View.GONE);
-    }
-
-    @NonNull
-    @Deprecated
-    private List<String> generateNames() {
-        List<String> names = new ArrayList<>();
-        names.add("War and Piece");
-        names.add("The Lord of the Rings");
-        names.add("The song of ice and fire");
-        names.add("Hobbit");
-        names.add("The Divine Comedy");
-        names.add("Hamlet");
-        names.add("Alice's Adventures in Wonderland");
-        names.add("Gulliver's Travels");
-        names.add("Harry Potter");
-        names.add("The Count Of Monte Cristo");
-        names.add("Do Androids Dream of Electric Sheep?");
-        names.add("Witcher");
-        names.add("Romeo and Juliet");
-        return names;
     }
 }

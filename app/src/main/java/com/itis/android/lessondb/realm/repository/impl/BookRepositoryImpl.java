@@ -25,7 +25,7 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     }
 
     @Override
-    public void insertBook(RealmBook book) {
+    public void insert(RealmBook book) {
         executeTransaction(realm -> {
             long id = nextKey(realm, RealmBook.class); // auto-increment in realm
             book.setId(id);

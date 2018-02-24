@@ -14,7 +14,7 @@ public interface BookRepository {
 
     Observable<List<RealmBook>> getAllBooks();
 
-    void insertBook(RealmBook book);
+    void insert(RealmBook book);
 
     RealmBook getBookById(long id);
 
