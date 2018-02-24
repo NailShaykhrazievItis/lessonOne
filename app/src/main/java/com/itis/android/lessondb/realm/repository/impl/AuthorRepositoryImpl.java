@@ -35,7 +35,7 @@ public class AuthorRepositoryImpl extends BaseRepository implements AuthorReposi
 
     @Override
     public RealmAuthor getAuthorByName(String name) {
-        return getRealm().where(RealmAuthor.class).equalTo("name",name).findFirst();
+        return getRealm().where(RealmAuthor.class).equalTo("name", name).findFirst();
     }
 
 

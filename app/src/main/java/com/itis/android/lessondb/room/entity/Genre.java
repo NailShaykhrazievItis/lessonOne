@@ -5,11 +5,11 @@ package com.itis.android.lessondb.room.entity;
  */
 
 public enum Genre {
+
     NUN(0),
     COMEDY(1),
     DRAMA(2),
     FANTASY(3);
-
 
     private int code;
 

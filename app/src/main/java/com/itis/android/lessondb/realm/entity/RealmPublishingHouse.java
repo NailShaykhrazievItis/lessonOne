@@ -17,8 +17,6 @@ public class RealmPublishingHouse extends RealmObject {
     private int year;
     private String phoneNumber;
 
-
-
     public long getId() {
         return id;
     }

@@ -37,6 +37,7 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Nail Shaykhraziev on 11.02.2018.
@@ -54,8 +55,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     private TextInputLayout tiGenre;
 
-    private Calendar date = Calendar.getInstance();
-
+    private Calendar date;
 
     private boolean isRoom = false; //costyl'
 
@@ -77,6 +77,8 @@ public class AddNewActivity extends AppCompatActivity {
 
         etDate.setOnClickListener(this::onButtonSelectDateClicled);
         findViewById(R.id.btn_add).setOnClickListener(this::onButtonAddClicked);
+
+
     }
 
     @Override
@@ -86,6 +88,7 @@ public class AddNewActivity extends AppCompatActivity {
     }
 
     public void onButtonSelectDateClicled(View view) {
+        date = Calendar.getInstance();
         new DatePickerDialog(AddNewActivity.this, d,
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
@@ -102,7 +105,8 @@ public class AddNewActivity extends AppCompatActivity {
         }
     };
 
-    public String check(int a) {
+    //converter from 9 to 09
+    private String check(int a) {
         return a < 10 ? "0" + a : "" + a;
     }
 
@@ -112,7 +116,6 @@ public class AddNewActivity extends AppCompatActivity {
         String desc = etDesc.getText().toString();
         String publishHouseName = etPublishHouse.getText().toString();
 
-
         try {
 
             if (etName.getText().equals("") || etAuthor.equals("")) {
@@ -120,12 +123,12 @@ public class AddNewActivity extends AppCompatActivity {
             } else {
                 if (isRoom) {
                     Genre genreRoom = Genre.valueOf(etGenre.getText().toString().toUpperCase().trim());
-                    roomFlow(name, authorName, desc, genreRoom, date.getTime(),publishHouseName);
+                    roomFlow(name, authorName, desc, genreRoom, date,publishHouseName);
                 } else {
                     com.itis.android.lessondb.realm.entity.Genre genre = com.itis.android.lessondb.realm.entity.Genre.valueOf(etGenre.getText().toString().toUpperCase().trim());
                     RealmGenre genreRealm = new RealmGenre();
                     genreRealm.saveEnum(genre);
-                    realmFlow(name, authorName, desc, genreRealm, date.getTime(),publishHouseName);
+                    realmFlow(name, authorName, desc, genreRealm, date,publishHouseName);
                 }
                 Toast.makeText(this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
                 finish();
@@ -141,13 +144,17 @@ public class AddNewActivity extends AppCompatActivity {
 
     }
 
-    private void realmFlow(String name, String authorName, String desc, RealmGenre genre, Date date,String pubHouse) {
+    private void realmFlow(String name, String authorName, String desc, RealmGenre genre, Calendar date,String pubHouse) {
+
         RealmBook book = new RealmBook();
         book.setTitle(name);
         book.setGenre(genre);
-        book.setReleaseDate(date);
-        book.setDesc(desc);
 
+        if(date!=null){
+        book.setReleaseDate(date.getTime());
+        }
+
+        book.setDesc(desc);
 
         RealmAuthor realmAuthor = RepositryProvider.provideAuthorRepository().getAuthorByName(authorName);
 
@@ -171,11 +178,15 @@ public class AddNewActivity extends AppCompatActivity {
         RepositryProvider.provideBookRepository().insertBook(book);
     }
 
-    private void roomFlow(String name, String authorName, String desc, Genre genre, Date date, String pubHouse) {
+    private void roomFlow(String name, String authorName, String desc, Genre genre, Calendar date, String pubHouse) {
         RoomBook book = new RoomBook();
         book.setTitle(name);
         book.setGenre(genre);
-        book.setReleaseDate(date);
+
+        if(date!=null){
+            book.setReleaseDate(date.getTime());
+        }
+
         book.setDesc(desc);
 
         RoomAuthor author = AppDatabase.getAppDatabase().getAuthorDao().getAuthorByName(authorName);

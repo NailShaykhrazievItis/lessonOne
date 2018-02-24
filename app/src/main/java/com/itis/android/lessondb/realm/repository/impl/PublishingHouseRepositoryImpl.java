@@ -27,11 +27,11 @@ public class PublishingHouseRepositoryImpl extends BaseRepository implements Pub
 
     @Override
     public RealmPublishingHouse getPublishingHouseByName(String name) {
-        return getRealm().where(RealmPublishingHouse.class).equalTo("name",name).findFirst();
+        return getRealm().where(RealmPublishingHouse.class).equalTo("name", name).findFirst();
     }
 
     @Override
     public RealmPublishingHouse getPublishingHouseById(Long id) {
-        return getRealm().where(RealmPublishingHouse.class).equalTo("id",id).findFirst();
+        return getRealm().where(RealmPublishingHouse.class).equalTo("id", id).findFirst();
     }
 }

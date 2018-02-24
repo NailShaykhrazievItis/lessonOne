@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private MaterialSearchView searchView;
     private Toolbar toolbar;
 
-
+    private List<RealmBook> booksRealm;
+    private List<RoomBook> booksRoom;
 
     private MainAdapter adapter;
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         } else {
             realmGetAll();
         }
+        getBooksFromDb();
 
     }
 
@@ -78,10 +80,12 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 case R.id.action_clear:
                     if (isRoom) {
                         clearRoomDB();
-                        adapter.changeDataSetRoom(new ArrayList<>());
+                        booksRoom = new ArrayList<>();
+                        adapter.changeDataSetRoom(booksRoom);
                     } else {
                         clearRealmDB();
-                        adapter.changeDataSetRealm(new ArrayList<>());
+                        booksRealm = new ArrayList<>();
+                        adapter.changeDataSetRealm(booksRealm);
                     }
 
             }
@@ -101,6 +105,14 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         startActivityForResult(intent, 1);
     }
 
+    private void getBooksFromDb(){
+        if (isRoom) {
+            booksRoom = AppDatabase.getAppDatabase().getBookDao().getAll();
+        } else {
+            booksRealm = RepositryProvider.provideBookRepository().getAll();
+        }
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
             else {
                 realmGetAll();
             }
+            getBooksFromDb();
         }
     }
 
@@ -170,24 +183,28 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
                 if(isRoom) {
                     List<RoomBook> result = new ArrayList<>();
-                    List<RoomBook> books = AppDatabase.getAppDatabase().getBookDao().getAll();
 
-                    for (int i = 0; i < books.size(); i++) {
-                        if (books.get(i).getTitle().toLowerCase().contains(newText.toLowerCase())) {
-                            result.add(books.get(i));
-                            adapter.changeDataSetRoom(result);
+                    for (int i = 0; i < booksRoom.size(); i++) {
+                        if (booksRoom.get(i).getTitle().toLowerCase().contains(newText.toLowerCase())) {
+                            result.add(booksRoom.get(i));
                         }
+                        else {
+                            result.remove(booksRoom.get(i));
+                        }
+                        adapter.changeDataSetRoom(result);
                     }
                 }
                 else {
                     List<RealmBook> result = new ArrayList<>();
-                    List<RealmBook> books = RepositryProvider.provideBookRepository().getAll();
 
-                    for (int i = 0; i < books.size(); i++) {
-                        if (books.get(i).getTitle().toLowerCase().contains(newText.toLowerCase())) {
-                            result.add(books.get(i));
-                            adapter.changeDataSetRealm(result);
+                    for (int i = 0; i < booksRealm.size(); i++) {
+                        if (booksRealm.get(i).getTitle().toLowerCase().contains(newText.toLowerCase())) {
+                            result.add(booksRealm.get(i));
                         }
+                        else {
+                            result.remove(booksRealm.get(i));
+                        }
+                        adapter.changeDataSetRealm(result);
                     }
                 }
                 return true;

@@ -63,7 +63,11 @@ public class DetailsActivity extends AppCompatActivity {
         tvAuthor.setText(book.getRealmAuthor().getName());
         tvDescription.setText(book.getDesc());
         tvGenre.setText(book.getGenre().getEnum().toString());
-        tvDate.setText(new SimpleDateFormat("dd.MM.yyyy").format(book.getReleaseDate()));
+
+        if(book.getReleaseDate()!=null) {
+            tvDate.setText(new SimpleDateFormat("dd.MM.yyyy").format(book.getReleaseDate()));
+        }
+
         tvPublishingHouse.setText(book.getPublishingHouse().getName());
     }
 
@@ -75,7 +79,11 @@ public class DetailsActivity extends AppCompatActivity {
         tvAuthor.setText(author.getName());
         tvDescription.setText(book.getDesc());
         tvGenre.setText(book.getGenre().toString());
-        tvDate.setText(new SimpleDateFormat("dd.MM.yyyy").format(book.getReleaseDate()));
+
+        if(book.getReleaseDate()!=null) {
+            tvDate.setText(new SimpleDateFormat("dd.MM.yyyy").format(book.getReleaseDate()));
+        }
+
         tvPublishingHouse.setText(roomPublishingHouse.getName());
     }
 }
