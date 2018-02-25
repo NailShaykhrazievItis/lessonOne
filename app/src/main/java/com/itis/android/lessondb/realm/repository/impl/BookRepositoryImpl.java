@@ -30,6 +30,11 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     }
 
     @Override
+    public List<RealmBook> getAllWhereContains(String text) {
+        return getRealm().where(RealmBook.class).contains("title", text).findAll();
+    }
+
+    @Override
     public void insertBook(RealmBook book) {
         executeTransaction(realm -> {
             long id = nextKey(realm, RealmBook.class); // auto-increment in realm

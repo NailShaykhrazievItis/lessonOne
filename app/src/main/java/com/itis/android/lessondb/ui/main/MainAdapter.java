@@ -35,7 +35,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         }
     };
 
-    MainAdapter(List<RealmBook> items) {this.itemsRealm.addAll(items);
+    MainAdapter(List<RoomBook> items) {this.itemsRoom.addAll(items);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public void onBindViewHolder(MainItemHolder holder, int position) {
-        RealmBook book = getItem(position);
+        RoomBook book = getItem(position);
         holder.bind(book);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(internalListener);
@@ -54,7 +54,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public int getItemCount() {
-        return itemsRealm.size();
+        return itemsRoom.size();
     }
 
     final void changeDataSetRoom(@NonNull List<RoomBook> values) {
@@ -67,8 +67,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         notifyDataSetChanged();
     }
 
-    private RealmBook getItem(int pos) {
-        return itemsRealm.get(pos);
+    private RoomBook getItem(int pos) {
+        return itemsRoom.get(pos);
     }
 
     void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {

@@ -57,7 +57,7 @@ public class AddNewActivity extends AppCompatActivity {
 
     private Calendar date;
 
-    private boolean isRoom = false; //costyl'
+    private boolean isRoom = true; //costyl'
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

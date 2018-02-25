@@ -25,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView tvPublishingHouse;
     private Toolbar toolbar;
 
-    private boolean isRoom = false;
+    private boolean isRoom = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,9 @@ public class DetailsActivity extends AppCompatActivity {
             tvDate.setText(new SimpleDateFormat("dd.MM.yyyy").format(book.getReleaseDate()));
         }
 
-        tvPublishingHouse.setText(roomPublishingHouse.getName());
+        if(roomPublishingHouse!=null) {
+            tvPublishingHouse.setText(roomPublishingHouse.getName());
+        }
+
     }
 }
