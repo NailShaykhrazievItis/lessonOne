@@ -17,4 +17,6 @@ public interface AuthorRepository {
     void insertAuthor(RealmAuthor realmAuthor);
 
     RealmAuthor getAuthorById(long id);
+
+    RealmAuthor getAuthorByName(String name);
 }

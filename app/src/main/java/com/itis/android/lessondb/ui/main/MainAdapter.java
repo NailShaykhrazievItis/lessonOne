@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     // need change RoomBook to RealmBook for work with Realm on this class
-    private List<RoomBook> items = new ArrayList<>();
+    // для смены на room bd все параметры поменять на RoomBook
+    private List<RoomBook> itemsRoom = new ArrayList<>();
+    private List<RealmBook> itemsRealm = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     private final View.OnClickListener internalListener = (view) -> {
@@ -32,8 +35,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         }
     };
 
-    MainAdapter(List<RoomBook> items) {
-        this.items.addAll(items);
+    MainAdapter(List<RoomBook> items) {this.itemsRoom.addAll(items);
     }
 
     @Override
@@ -52,17 +54,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return itemsRoom.size();
     }
 
-    final void changeDataSet(@NonNull List<RoomBook> values) {
-        items.clear();
-        items.addAll(values);
+    final void changeDataSetRoom(@NonNull List<RoomBook> values) {
+        itemsRoom = values;
+        notifyDataSetChanged();
+    }
+
+    final void changeDataSetRealm(List<RealmBook> values){
+        itemsRealm = values;
         notifyDataSetChanged();
     }
 
     private RoomBook getItem(int pos) {
-        return items.get(pos);
+        return itemsRoom.get(pos);
     }
 
     void setOnItemClickListener(@Nullable OnItemClickListener onItemClickListener) {

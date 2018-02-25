@@ -31,9 +31,19 @@ public interface BookDao {
     @Query("SELECT * from book where id = :bookId LIMIT 1")
     Single<RoomBook> loadBookById(long bookId); // room supports Single, Maybe, Flowable
 
-    @Query("UPDATE book SET genre = :genre WHERE id = :bookId") //update example
+    @Query("UPDATE book SET genre = :genre WHERE id = :bookId")
+        //update example
     void updateGenreById(long bookId, Genre genre);
 
     @Query("DELETE FROM book")
     void clearBookTable();
+
+    @Query("SELECT * FROM book WHERE title = :title")
+    List<RoomBook> getBookByName(String title);
+
+    @Query("SELECT * FROM book")
+    List<RoomBook> getAll();
+
+    @Query("SELECT * FROM book WHERE instr(title, :text)>0")
+    List<RoomBook> getAllWhereContains(String text);
 }
