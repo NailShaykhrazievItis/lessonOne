@@ -5,7 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.itis.android.lessondb.ui.DetailsActivity">
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,17 +63,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_one"
+            android:text="@string/description"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_one"
+            android:id="@+id/tv_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16"
-            tools:text="The Lord of the Rings" />
+            tools:text="@string/description" />
     </LinearLayout>
 
     <LinearLayout
@@ -81,17 +85,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_two"
+            android:text="ReleaseDate"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_two"
+            android:id="@+id/tv_release_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16"
-            tools:text="The Lord of the Rings" />
+            tools:text="ReleaseDate" />
     </LinearLayout>
 
     <LinearLayout
@@ -103,16 +107,37 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/field_three"
+            android:text="Genre"
             android:textColor="@color/secondary_text" />
 
         <TextView
-            android:id="@+id/tv_field_three"
+            android:id="@+id/tv_genre"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin.small"
             android:textColor="@color/primary_text"
             android:textSize="@dimen/text.16"
-            tools:text="The Lord of the Rings" />
+            tools:text="Genre" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/margin.large">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reader_name"
+            android:textColor="@color/secondary_text" />
+
+        <TextView
+            android:id="@+id/tv_reader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin.small"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text.16"
+            tools:text="@string/reader_name" />
     </LinearLayout>
 </LinearLayout>

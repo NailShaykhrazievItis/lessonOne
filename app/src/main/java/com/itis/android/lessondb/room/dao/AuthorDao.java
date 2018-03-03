@@ -20,4 +20,9 @@ public interface AuthorDao {
 
     @Query("DELETE FROM author")
     void clearAuthorTable();
+
+    @Query("SELECT * FROM author WHERE name =:name LIMIT 1")
+    RoomAuthor getAuthorByName(String name);
+
+
 }

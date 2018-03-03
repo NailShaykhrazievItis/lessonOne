@@ -37,4 +37,14 @@ public class BookRepositoryImpl extends BaseRepository implements BookRepository
     public void clearDB() {
         super.clearDB();
     }
+
+    @Override
+    public List<RealmBook> getAllWhereContains(String text) {
+        return getRealm().where(RealmBook.class).contains("title", text).findAll();
+    }
+
+    @Override
+    public List<RealmBook> getAll() {
+        return getRealm().where(RealmBook.class).findAll();
+    }
 }

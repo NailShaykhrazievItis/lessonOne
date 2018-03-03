@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/item_size"
     android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="72dp">
 
     <TextView
         android:id="@+id/item_name"
@@ -14,6 +17,7 @@
         android:paddingTop="@dimen/margin.large"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text.16"
+
         tools:text="The Lord of the Rings" />
 
     <TextView
@@ -26,5 +30,21 @@
         android:paddingStart="@dimen/margin.large"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/text.14"
-        tools:text="J.R.R. Tolkien" />
+        tools:text="J.R.R. Tolkien"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@id/item_name"/>
+
+    <TextView
+        android:id="@+id/item_reader_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin.large"
+        android:paddingEnd="@dimen/margin.large"
+        android:paddingStart="@dimen/margin.large"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text.14"
+        android:layout_alignRight="@id/item_author"
+        tools:text="Anton" />
+    </RelativeLayout>
 </LinearLayout>

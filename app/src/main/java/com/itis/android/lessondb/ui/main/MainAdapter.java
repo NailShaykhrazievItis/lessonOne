@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
+import com.itis.android.lessondb.realm.entity.RealmBook;
 import com.itis.android.lessondb.room.entity.RoomBook;
 
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ import java.util.List;
 public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     // need change RoomBook to RealmBook for work with Realm on this class
-    private List<RoomBook> items = new ArrayList<>();
+    private List<RealmBook> items = new ArrayList<>();
+    //private List<RealmBook> itemsRealm = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
 
     private final View.OnClickListener internalListener = (view) -> {
@@ -32,7 +34,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         }
     };
 
-    MainAdapter(List<RoomBook> items) {
+    MainAdapter(List<RealmBook> items) {
         this.items.addAll(items);
     }
 
@@ -44,7 +46,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
 
     @Override
     public void onBindViewHolder(MainItemHolder holder, int position) {
-        RoomBook book = getItem(position);
+       RealmBook book = getItem(position);
         holder.bind(book);
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(internalListener);
@@ -55,13 +57,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainItemHolder> {
         return items.size();
     }
 
-    final void changeDataSet(@NonNull List<RoomBook> values) {
-        items.clear();
-        items.addAll(values);
+//    final void changeDataSet(@NonNull List<RoomBook> values) {
+//        items.clear();
+//        items.addAll(values);
+//        notifyDataSetChanged();
+//    }
+
+    final void changeDataSet(List<RealmBook> values){
+        items = values;
         notifyDataSetChanged();
     }
 
-    private RoomBook getItem(int pos) {
+    private RealmBook getItem(int pos) {
         return items.get(pos);
     }
 
