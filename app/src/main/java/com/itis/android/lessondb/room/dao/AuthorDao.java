@@ -23,6 +23,4 @@ public interface AuthorDao {
 
     @Query("SELECT * FROM author WHERE name =:name LIMIT 1")
     RoomAuthor getAuthorByName(String name);
-
-
 }

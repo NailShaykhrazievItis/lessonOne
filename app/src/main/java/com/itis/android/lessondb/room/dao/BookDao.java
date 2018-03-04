@@ -40,6 +40,6 @@ public interface BookDao {
     @Query("SELECT * FROM book")
     List<RoomBook> getAll();
 
-    @Query("SELECT * FROM book WHERE instr(title, :text)>0")
+    @Query("SELECT * FROM book WHERE instr(title, :text) > 0")
     List<RoomBook> getAllWhereContains(String text);
 }

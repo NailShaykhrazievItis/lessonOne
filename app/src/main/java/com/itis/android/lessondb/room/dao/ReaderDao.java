@@ -13,7 +13,7 @@ import com.itis.android.lessondb.room.entity.RoomReader;
 @Dao
 public interface ReaderDao {
 
-    @Query("SELECT * FROM reader WHERE id = :readerId LIMIT 1")
+    @Query("SELECT * FROM reader WHERE id = :readerId")
     RoomReader getReaderById(long readerId);
 
     @Insert
@@ -24,5 +24,4 @@ public interface ReaderDao {
 
     @Query("SELECT * FROM reader WHERE name = :name LIMIT 1")
     RoomReader getReaderByName(String name);
-
 }

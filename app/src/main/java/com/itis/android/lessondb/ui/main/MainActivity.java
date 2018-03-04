@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClickListener {
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private MainAdapter adapter;
 
     private boolean isRoom = false;
+    private byte REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +85,7 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     public void onFabClicked(View vIew) {
         Intent intent = new Intent(this, AddNewActivity.class);
-        startActivityForResult(intent, 1);
-       // startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE);
     }
 
     @Override
@@ -130,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         AppDatabase.getAppDatabase()
                 .getBookDao()
                 .getAllBooks()
-
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::roomChangeData, this::handleError);
@@ -145,8 +142,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
-
                 onQueryTextChange(query);
                 searchView.clearFocus();
 
@@ -157,8 +152,9 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
             public boolean onQueryTextChange(String newText) {
 
                 if(isRoom) {
-                    List<RoomBook> result = AppDatabase.getAppDatabase().getBookDao().getAllWhereContains(newText);
-//                    adapter.changeDataSet(result);
+                    List<RoomBook> result = AppDatabase.getAppDatabase()
+                            .getBookDao()
+                            .getAllWhereContains(newText);
                 }
                 else {
                     List<RealmBook> result = RepositryProvider.provideBookRepository().getAllWhereContains(newText);
@@ -166,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
                 }
                 return true;
             }
-
         });
     }
 

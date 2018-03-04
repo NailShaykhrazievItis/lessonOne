@@ -20,8 +20,6 @@ public class ReaderRepositoryImpl extends BaseRepository implements ReaderReposi
         return Observable.just(getRealm().where(RealmReader.class).findAll());
     }
 
-
-
     @Override
     public void insertReader(RealmReader realmReader) {
         executeTransaction(realm -> {
@@ -35,5 +33,4 @@ public class ReaderRepositoryImpl extends BaseRepository implements ReaderReposi
     public RealmReader getReaderById(long id) {
         return getRealm().where(RealmReader.class).equalTo("id", id).findFirst();
     }
-
 }

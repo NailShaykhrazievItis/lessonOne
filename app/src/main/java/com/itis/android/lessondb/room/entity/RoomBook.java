@@ -22,12 +22,11 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
                 parentColumns = "id",
                 childColumns = "author_id",
                 onDelete = CASCADE),
-                    @ForeignKey(entity = RoomReader.class,
-                            parentColumns = "id",
-                            childColumns = "reader_id",
-                            onDelete = CASCADE)})
-
-public class RoomBook implements Book{
+                @ForeignKey(entity = RoomReader.class,
+                        parentColumns = "id",
+                        childColumns = "reader_id",
+                        onDelete = CASCADE)})
+public class RoomBook implements Book {
 
     @PrimaryKey(autoGenerate = true)
     private long id;
@@ -43,8 +42,6 @@ public class RoomBook implements Book{
 
     @ColumnInfo(name = "author_id")
     private long authorId;
-
-
 
     @ColumnInfo(name = "reader_id")
     private long readerId;
@@ -99,7 +96,7 @@ public class RoomBook implements Book{
     }
 
     public long getReaderId() {
-        return  readerId;
+        return readerId;
     }
 
     public void setReaderId(long readerId) {

@@ -1,6 +1,5 @@
 package com.itis.android.lessondb.realm.repository;
 
-import com.itis.android.lessondb.realm.entity.RealmAuthor;
 import com.itis.android.lessondb.realm.entity.RealmReader;
 
 import java.util.List;
@@ -18,5 +17,4 @@ public interface ReaderRepository {
     void insertReader(RealmReader realmReader);
 
     RealmReader getReaderById(long id);
-
 }

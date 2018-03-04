@@ -14,4 +14,6 @@
     <dimen name="text.20">20sp</dimen>
     <dimen name="text.22">22sp</dimen>
     <dimen name="text.24">24sp</dimen>
+
+    <dimen name="height.72">72dp</dimen>
 </resources>

@@ -57,8 +57,6 @@ public class DetailsActivity extends AppCompatActivity {
         tvDate = findViewById(R.id.tv_release_date);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
     }
 
     private void realmFlow(long id) {

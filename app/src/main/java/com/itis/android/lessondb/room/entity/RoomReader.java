@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Entity(tableName = "reader", indices = {@Index(value = {"id"}, unique = true)})
 public class RoomReader {
+
     @PrimaryKey(autoGenerate = true)
     private long id;
 
@@ -31,5 +32,4 @@ public class RoomReader {
     public void setName(String name) {
         this.name = name;
     }
-
 }

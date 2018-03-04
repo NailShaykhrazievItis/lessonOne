@@ -24,7 +24,6 @@ import com.itis.android.lessondb.room.entity.RoomBook;
 import com.itis.android.lessondb.room.entity.RoomReader;
 
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by Nail Shaykhraziev on 11.02.2018.
@@ -43,14 +42,24 @@ public class AddNewActivity extends AppCompatActivity {
 
     private TextInputLayout tiGenre;
 
-
     private Calendar date;
+
     private boolean isRoom = false; //costyl'
+    private String EMPTY = "Title or author is empty";
+    private String NEW_AUTHOR = "NEW AUTHOR";
+    private String AUTHOR_EXIST = "AUTHOR ALREADY EXISTS";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new);
+        initViews();
+        setSupportActionBar(toolbar);
+        etReleaseDate.setOnClickListener(this::onButtonSelectDateClicled);
+        findViewById(R.id.btn_add).setOnClickListener(this::onButtonAddClicked);
+    }
+
+    private void initViews() {
         etName = findViewById(R.id.et_name);
         etAuthor = findViewById(R.id.et_author);
         etReader = findViewById(R.id.et_reader);
@@ -58,11 +67,7 @@ public class AddNewActivity extends AppCompatActivity {
         etGenre = findViewById(R.id.et_genre);
         etReleaseDate = findViewById(R.id.et_date);
         tiGenre = findViewById(R.id.ti_genre);
-
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        etReleaseDate.setOnClickListener(this::onButtonSelectDateClicled);
-        findViewById(R.id.btn_add).setOnClickListener(this::onButtonAddClicked);
     }
 
     @Override
@@ -94,16 +99,14 @@ public class AddNewActivity extends AppCompatActivity {
         return a < 10 ? "0" + a : "" + a;
     }
 
-
     private void onButtonAddClicked(View view) {
         String name = etName.getText().toString().trim();
         String authorName = etAuthor.getText().toString().trim();
         String readerName = etReader.getText().toString();
         String desc = etDesc.getText().toString();
 
-
         if (etName.getText().equals("") || etAuthor.equals("")) {
-            Toast.makeText(getApplicationContext(), "Title or author is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), EMPTY, Toast.LENGTH_SHORT).show();
         } else {
         if (isRoom) {
             Genre genreRoom = Genre.valueOf(etGenre.getText().toString().toUpperCase().trim());
@@ -116,8 +119,7 @@ public class AddNewActivity extends AppCompatActivity {
             realmFlow(name, authorName,readerName,desc, genreRealm, date);
         }
 
-
-        Toast.makeText(this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.add_book), Toast.LENGTH_SHORT).show();
     }
     }
 
@@ -161,11 +163,11 @@ public class AddNewActivity extends AppCompatActivity {
             author.setName(authorName);
             long authorId = AppDatabase.getAppDatabase().getAuthorDao().insertAuthor(author);
             book.setAuthorId(authorId);
-            Toast.makeText(getApplicationContext(),"NEW AUTHOR",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),NEW_AUTHOR,Toast.LENGTH_SHORT).show();
         }
         else {
             book.setAuthorId(author.getId());
-            Toast.makeText(getApplicationContext(),"AUTHOR ALREADY EXISTS",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),AUTHOR_EXIST,Toast.LENGTH_SHORT).show();
         }
 
         RoomReader reader = AppDatabase.getAppDatabase().getReaderDao().getReaderByName(readerName);
