@@ -7,11 +7,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.itis.android.lessondb.R;
 import com.itis.android.lessondb.general.Book;
@@ -21,23 +21,25 @@ import com.itis.android.lessondb.room.AppDatabase;
 import com.itis.android.lessondb.room.entity.RoomBook;
 import com.itis.android.lessondb.ui.AddNewActivity;
 import com.itis.android.lessondb.ui.DetailsActivity;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements MainAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
     private FloatingActionButton fabAdd;
-    private ProgressBar progressBar;
+    private MaterialSearchView searchView;
+    private Toolbar toolbar;
 
     private MainAdapter adapter;
 
-    private boolean isRoom = true;
+    private boolean isRoom = false;
+    private byte REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
         return true;
     }
 
@@ -81,7 +85,19 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
 
     public void onFabClicked(View vIew) {
         Intent intent = new Intent(this, AddNewActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode==1){
+            if(isRoom){
+                roomGetAll();
+            }
+            else {
+                realmGetAll();
+            }
+        }
     }
 
     @Override
@@ -103,8 +119,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private void realmGetAll() {
         RepositryProvider.provideBookRepository()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doOnTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::changeData, this::handleError);
@@ -114,8 +128,6 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
         AppDatabase.getAppDatabase()
                 .getBookDao()
                 .getAllBooks()
-                .doOnSubscribe(this::showLoading)
-                .doAfterTerminate(this::hideLoading)
                 .subscribeOn(Schedulers.io()) // this method don't need for Flowable. Flowable default work another thread
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::roomChangeData, this::handleError);
@@ -124,7 +136,33 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     private void initViews() {
         recyclerView = findViewById(R.id.rv_main);
         fabAdd = findViewById(R.id.fab_main);
-        progressBar = findViewById(R.id.pg_main);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                onQueryTextChange(query);
+                searchView.clearFocus();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if(isRoom) {
+                    List<RoomBook> result = AppDatabase.getAppDatabase()
+                            .getBookDao()
+                            .getAllWhereContains(newText);
+                }
+                else {
+                    List<RealmBook> result = RepositryProvider.provideBookRepository().getAllWhereContains(newText);
+                    adapter.changeDataSet(result);
+                }
+                return true;
+            }
+        });
     }
 
     private void initRecycler() {
@@ -147,24 +185,17 @@ public class MainActivity extends AppCompatActivity implements MainAdapter.OnIte
     }
 
     private void changeData(@NonNull List<RealmBook> books) {
-//        adapter.changeDataSet(books);
+        adapter.changeDataSet(books);
     }
 
     private void roomChangeData(@NonNull List<RoomBook> books) {
-        adapter.changeDataSet(books);
+        //adapter.changeDataSet(books);
     }
 
     private void handleError(Throwable throwable) {
         Log.e("HandleError: ", throwable.getMessage());
     }
 
-    private void showLoading(Disposable disposable) {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    private void hideLoading() {
-        progressBar.setVisibility(View.GONE);
-    }
 
     @NonNull
     @Deprecated

@@ -36,4 +36,10 @@ public interface BookDao {
 
     @Query("DELETE FROM book")
     void clearBookTable();
+
+    @Query("SELECT * FROM book")
+    List<RoomBook> getAll();
+
+    @Query("SELECT * FROM book WHERE instr(title, :text) > 0")
+    List<RoomBook> getAllWhereContains(String text);
 }

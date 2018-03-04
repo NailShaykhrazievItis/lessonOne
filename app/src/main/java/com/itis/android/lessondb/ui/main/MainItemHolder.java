@@ -17,16 +17,19 @@ public class MainItemHolder extends RecyclerView.ViewHolder {
 
     private TextView name;
     private TextView author;
+    private TextView readerName;
 
     MainItemHolder(View itemView) {
         super(itemView);
         name = itemView.findViewById(R.id.item_name);
         author = itemView.findViewById(R.id.item_author);
+        readerName = itemView.findViewById(R.id.item_reader_name);
     }
 
     public void bind(RealmBook book) {
         name.setText(book.getTitle());
         author.setText(book.getRealmAuthor().getName());
+        readerName.setText(book.getRealmReader().getName());
     }
 
     public void bind(RoomBook book) {
@@ -36,5 +39,11 @@ public class MainItemHolder extends RecyclerView.ViewHolder {
                 .getAuthorById(book.getAuthorId())
                 .getName();
         author.setText(name);
+        String nameReader = AppDatabase.getAppDatabase()
+                .getReaderDao()
+                .getReaderById(book.getReaderId())
+                .getName();
+        readerName.setText(nameReader);
+
     }
 }

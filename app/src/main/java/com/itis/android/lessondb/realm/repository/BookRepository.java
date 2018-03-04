@@ -19,4 +19,8 @@ public interface BookRepository {
     RealmBook getBookById(long id);
 
     void clearDB();
+
+    List<RealmBook> getAll();
+
+    List<RealmBook> getAllWhereContains(String text);
 }

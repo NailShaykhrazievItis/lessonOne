@@ -9,4 +9,11 @@
     <string name="field_two">Field two</string>
     <string name="field_three">Field three</string>
     <string name="add_book">Add roomBook to db</string>
+    <string name="reader_name">Reader name</string>
+    <string name="publisher">publisher</string>
+    <string name="date">date</string>
+    <string name="genre">genre</string>
+    <string name="description">description</string>
+    <string name="releasedate">ReleaseDate</string>
+    <string name="genre1">Genre</string>
 </resources>
